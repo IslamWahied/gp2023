@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "957227201808",
+    "project_id": "gradp2023-11ae2",
+    "storage_bucket": "gradp2023-11ae2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957227201808:android:7574475953b817354fa195",
+        "android_client_info": {
+          "package_name": "com.example.gp2023"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957227201808-uv6rmut0vrqqmhclktk54j8hpe0jun4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgnPZOCGhdAxc2FiiT0-MgGFIm-2NfLOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "957227201808-uv6rmut0vrqqmhclktk54j8hpe0jun4j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
