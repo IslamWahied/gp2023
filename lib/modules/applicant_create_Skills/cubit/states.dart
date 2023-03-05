@@ -19,3 +19,7 @@ class ApplicantCreateSkillsChangeCityState
 
 class ApplicantCreateSkillsChangeNationalityState
     extends ApplicantCreateSkillsStates {}
+
+
+class ApplicantSelectSkillsState
+    extends ApplicantCreateSkillsStates {}

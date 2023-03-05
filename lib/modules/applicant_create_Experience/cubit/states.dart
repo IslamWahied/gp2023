@@ -20,5 +20,5 @@ class ApplicantCreateExperienceErrorState
 class ApplicantCreateExperienceChangeCityState
     extends ApplicantCreateExperienceStates {}
 
-class ApplicantCreateExperienceChangeNationalityState
+class ApplicantCreateExperienceChangePositionState
     extends ApplicantCreateExperienceStates {}

@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gp2023/layout/applicant_layout/applicant_layout.dart';
+import 'package:gp2023/layout/home_layout/home_screen.dart';
+import 'package:gp2023/modules/applicant_create_CV/applicantPrimativeData.dart';
 import 'package:gp2023/modules/applicant_home_module/cubit/cubit.dart';
 import 'package:gp2023/shared/bloc_observer.dart';
 import 'package:gp2023/shared/styles/themes.dart';
@@ -16,8 +18,6 @@ import './shared/network/local/cache_helper.dart';
 import './shared/components/constants.dart';
 import 'layout/hr_layout/cubit/cubit.dart';
 import 'package:flutter/rendering.dart';
-
-
 
 
 void main() async {
@@ -99,6 +99,8 @@ class MyApp extends StatelessWidget {
               ApplicantRegisterCubit()..getApplicantRegisterString(),
         ),
       ],
+
+      // test
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -109,6 +111,7 @@ class MyApp extends StatelessWidget {
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             home: startWidget,
+             // home: ApplicantPrimativeDataHome(),
           );
         },
       ),

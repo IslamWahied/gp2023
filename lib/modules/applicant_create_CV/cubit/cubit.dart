@@ -1,9 +1,12 @@
 // @dart=2.9
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gp2023/models/CVModel.dart';
+import 'package:gp2023/models/jopTitleModel.dart';
 import 'package:gp2023/modules/applicant_create_CV/cubit/states.dart';
 
 import '../../../models/EducationModel.dart';
@@ -11,7 +14,10 @@ import '../../../models/EducationModel.dart';
 
 class ApplicantPrimativeDataCubit extends Cubit<ApplicantPrimativeDataStates> {
   var city = "Cairo";
+  var country = "Egypt";
   var nationality = "Egyptian";
+  var jopTitle="IT";
+  var grade="Excellence";
   ApplicantPrimativeDataCubit() : super(ApplicantPrimativeDataInitialState());
 
   static ApplicantPrimativeDataCubit get(context) => BlocProvider.of(context);
@@ -48,10 +54,44 @@ class ApplicantPrimativeDataCubit extends Cubit<ApplicantPrimativeDataStates> {
     emit(ApplicantPrimativeDataChangeCityState());
   }
 
+  void changeCountryState(String country) {
+    country = country;
+    emit(ApplicantPrimativeDataChangeCountryState());
+  }
+
+
   void changeNationalityState(String nationality) {
     nationality = nationality;
     emit(ApplicantPrimativeDataChangeNationalityState());
   }
+
+
+  void changeJopTitleState(String JopTitle) {
+    jopTitle = JopTitle;
+    emit(ApplicantPrimativeDataChangeJopTitleState());
+  }
+
+  void changeGradeState(String Grade) {
+    Grade = Grade;
+    emit(ApplicantPrimativeDataChangeGradeState());
+  }
+
+
+  // List<JopTitleData> JopTitleItems = [
+  //
+  // ];
+  // List<JopTitleData> selectedJopTitle = [];
+  //
+  // void selectJopTitle(val, context) {
+  //   FocusScope.of(context).requestFocus(FocusNode());
+  //
+  //   selectedJopTitle = val;
+  //
+  //   emit(ApplicantPrimativeDataChangeJopTitleState());
+  // }
+
+
+
 
 }
 

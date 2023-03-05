@@ -28,15 +28,15 @@ class ApplicantLayout extends StatelessWidget {
               onTap: (index) {
                 ApplicantCubit.get(context).changeIndex(index);
               },
-              items: [
-                const BottomNavigationBarItem(
+              items: const [
+                BottomNavigationBarItem(
                   backgroundColor: Color(0xff1B75BC),
                   icon: Icon(
                     Icons.home,
                   ),
                   label: 'Home',
                 ),
-                const BottomNavigationBarItem(
+                BottomNavigationBarItem(
                   backgroundColor: Color(0xff1B75BC),
                   icon: Icon(
                     Icons.file_copy_outlined,
@@ -44,7 +44,7 @@ class ApplicantLayout extends StatelessWidget {
                   label: 'Application states',
 
                 ),
-                const BottomNavigationBarItem(
+                BottomNavigationBarItem(
                   backgroundColor: Color(0xff1B75BC),
                   icon: Icon(
                     Icons.favorite_outlined,

@@ -7,6 +7,7 @@ import 'package:gp2023/models/CVModel.dart';
 import 'package:gp2023/models/JobSearchModel.dart';
 import 'package:gp2023/modules/applicant_create_CV/cubit/states.dart';
 import 'package:gp2023/modules/filter_module/cubit/states.dart';
+import 'package:gp2023/shared/jobs.dart';
 
 import '../../../models/Filter_model.dart';
 import '../../applicant_home_module/cubit/cubit.dart';
@@ -17,6 +18,12 @@ class FilterCubit extends Cubit<FilterStates> {
 
   static FilterCubit get(context) => BlocProvider.of(context);
 
+
+  var formKey = GlobalKey<FormState>();
+  var salaryFromController = TextEditingController();
+  var salaryToController = TextEditingController();
+
+
   double salaryFrom;
   double salaryTo;
   void filterApply(
@@ -24,6 +31,34 @@ class FilterCubit extends Cubit<FilterStates> {
       {double salaryfrom, double salaryto, String companyName}) {
     salaryFrom = salaryfrom;
     salaryTo = salaryto;
+
+    ApplicantRegisterCubit.get(context).searchList=[];
+    jobList.forEach((element) {
+
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //
     // FilterModel model = FilterModel(

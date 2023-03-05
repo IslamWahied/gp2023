@@ -22,3 +22,12 @@ class ApplicantCreateEducationChangeCityState
 
 class ApplicantCreateEducationChangeNationalityState
     extends ApplicantCreateEducationStates {}
+class ApplicantCreateEducationChangeeducationLevelState
+    extends ApplicantCreateEducationStates {}
+
+
+
+class ApplicantCreateEducationChangeFacultyState
+    extends ApplicantCreateEducationStates {}
+
+class ApplicantPrimativeDataChangeEducationLevelState extends ApplicantCreateEducationStates {}

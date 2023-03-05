@@ -1,9 +1,7 @@
 // @dart=2.9
-import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp2023/modules/applicant_app_states_module/cubit/states.dart';
-import 'package:gp2023/modules/applicant_create_CV/cubit/states.dart';
+
 import 'package:gp2023/modules/applicant_create_Skills/applicantCreateSkills.dart';
 import 'package:intl/intl.dart';
 
@@ -19,9 +17,20 @@ class ApplicantCreateExperienceHome extends StatelessWidget {
   Widget build(BuildContext context) {
     var formKey = GlobalKey<FormState>();
     var companyNameController = TextEditingController();
-    var positionController = TextEditingController();
+    // var positionController = TextEditingController();
     var startdateTimeController = TextEditingController();
     var enddateTimeController = TextEditingController();
+
+    List<String> positions = ["Team leader", "Manager"];
+    final List<DropdownMenuItem<String>> positionDropDownMenuItems2 = positions
+        .map(
+          (String value) => DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          ),
+        )
+        .toList();
+
     return BlocProvider(
       create: (BuildContext context) => ApplicantCreateExperienceCubit(),
       child: BlocConsumer<ApplicantCreateExperienceCubit,
@@ -43,12 +52,15 @@ class ApplicantCreateExperienceHome extends StatelessWidget {
         }
       }, builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(title: const Text('Add Experience',
-            style: TextStyle(color: Colors.white,
-              fontSize: 22,
+          appBar: AppBar(
+            title: const Text(
+              'Add Experience',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+              ),
             ),
-          ),
-            backgroundColor: Color(0xff1B75BC),
+            backgroundColor: const Color(0xff1B75BC),
           ),
           body: Center(
             child: SingleChildScrollView(
@@ -68,6 +80,7 @@ class ApplicantCreateExperienceHome extends StatelessWidget {
                         const SizedBox(
                           height: 30.0,
                         ),
+
                         defaultFormField(
                           controller: companyNameController,
                           type: TextInputType.text,
@@ -82,17 +95,37 @@ class ApplicantCreateExperienceHome extends StatelessWidget {
                         const SizedBox(
                           height: 15.0,
                         ),
-                        defaultFormField(
-                          controller: positionController,
-                          type: TextInputType.text,
-                          validate: (String value) {
-                            if (value.isEmpty) {
-                              return 'enter Value';
-                            }
-                          },
-                          label: 'position',
-                          prefix: Icons.post_add_outlined,
+
+                        const Text('Position',
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Color(0xff1B75BC),
+                                fontWeight: FontWeight.w700)),
+                        const SizedBox(
+                          height: 15.0,
                         ),
+                        SizedBox(
+                          child: defaultDropDownList(
+                              ApplicantCreateExperienceCubit.get(context)
+                                  .position, (value) {
+                            if (value != null) {
+                              ApplicantCreateExperienceCubit.get(context)
+                                  .changePositionState(value);
+                            }
+                          }, positionDropDownMenuItems2),
+                        ),
+
+                        // defaultFormField(
+                        //   controller: positionController,
+                        //   type: TextInputType.text,
+                        //   validate: (String value) {
+                        //     if (value.isEmpty) {
+                        //       return 'enter Value';
+                        //     }
+                        //   },
+                        //   label: 'position',
+                        //   prefix: Icons.post_add_outlined,
+                        // ),
                         const SizedBox(
                           height: 15,
                         ),
@@ -143,27 +176,30 @@ class ApplicantCreateExperienceHome extends StatelessWidget {
                                 ApplicantCreateExperienceCubit.get(context)
                                     .ExperienceCreate(
                                         companyName: companyNameController.text,
-                                        position: positionController.text,
+                                        position:
+                                            ApplicantCreateExperienceCubit.get(
+                                                    context)
+                                                .position,
                                         endDate: enddateTimeController.text,
                                         startDate: startdateTimeController.text,
                                         uId: CacheHelper.getData(key: 'uId'));
-                                navigateTo(
-                                    context, ApplicantCreateExperienceHome());
-                                companyNameController = TextEditingController();
-                                positionController = TextEditingController();
-                                startdateTimeController = TextEditingController();
+                                navigateTo(context,
+                                    const ApplicantCreateExperienceHome());
+
+                                startdateTimeController =
+                                    TextEditingController();
                                 enddateTimeController = TextEditingController();
                               }
                               {}
                             },
                             text: 'Save and Add Another Experience',
-                            background: Color(0xff1B75BC),
+                            background: const Color(0xff1B75BC),
                             radius: 50,
                             width: 300,
                             isUpperCase: true,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Center(
@@ -173,16 +209,20 @@ class ApplicantCreateExperienceHome extends StatelessWidget {
                                 ApplicantCreateExperienceCubit.get(context)
                                     .ExperienceCreate(
                                         companyName: companyNameController.text,
-                                        position: positionController.text,
+                                        position:
+                                            ApplicantCreateExperienceCubit.get(
+                                                    context)
+                                                .position,
                                         endDate: enddateTimeController.text,
                                         startDate: startdateTimeController.text,
                                         uId: CacheHelper.getData(key: 'uId'));
-                                navigateTo(context, ApplicantCreateSkillsHome());
+                                navigateTo(
+                                    context, const ApplicantCreateSkillsHome());
                               }
                               {}
                             },
                             text: 'Save and Continue',
-                            background: Color(0xff1B75BC),
+                            background: const Color(0xff1B75BC),
                             radius: 50,
                             width: 300,
                             isUpperCase: true,

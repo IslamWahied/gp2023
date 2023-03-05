@@ -17,6 +17,20 @@ class ApplicantPrimativeDataErrorState extends ApplicantPrimativeDataStates {
 class ApplicantPrimativeDataChangeCityState
     extends ApplicantPrimativeDataStates {}
 
+
+class ApplicantPrimativeDataChangeCountryState
+    extends ApplicantPrimativeDataStates {}
+
+
+class ApplicantPrimativeDataChangeEducationLevelState
+    extends ApplicantPrimativeDataStates {}
+
+
+
 class ApplicantPrimativeDataChangeNationalityState
     extends ApplicantPrimativeDataStates {}
+
+class ApplicantPrimativeDataChangeJopTitleState extends ApplicantPrimativeDataStates {}
+
+class ApplicantPrimativeDataChangeGradeState extends ApplicantPrimativeDataStates {}
 

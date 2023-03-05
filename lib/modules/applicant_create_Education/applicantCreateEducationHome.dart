@@ -1,11 +1,9 @@
 // @dart=2.9
-import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp2023/modules/applicant_app_states_module/cubit/states.dart';
-import 'package:gp2023/modules/applicant_create_CV/cubit/states.dart';
+
 import 'package:gp2023/modules/applicant_create_Experience/applicantCreateEducationHome.dart';
-import 'package:gp2023/shared/styles/colors.dart';
+
 import 'package:intl/intl.dart';
 
 import '../../shared/components/components.dart';
@@ -78,7 +76,10 @@ class ApplicantCreateEducationHome extends StatelessWidget {
       "Akhmim",
       "Matareya"
     ];
-    final List<DropdownMenuItem<String>> _dropDownMenuItems2 = uniList
+    List<String> educationLevels = ["Master", "Doctor"];
+    List<String> faculties = ["computer", "Engineer"];
+
+    final List<DropdownMenuItem<String>> dropDownMenuItems2 = uniList
         .map(
           (String value) => DropdownMenuItem<String>(
             value: value,
@@ -86,6 +87,26 @@ class ApplicantCreateEducationHome extends StatelessWidget {
           ),
         )
         .toList();
+
+    final List<DropdownMenuItem<String>> educationLevelDropDownMenuItems2 =
+        educationLevels
+            .map(
+              (String value) => DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              ),
+            )
+            .toList();
+
+    final List<DropdownMenuItem<String>> facultiesDropDownMenuItems2 = faculties
+        .map(
+          (String value) => DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          ),
+        )
+        .toList();
+
     return BlocProvider(
       create: (BuildContext context) => ApplicantCreateEducationCubit(),
       child: BlocConsumer<ApplicantCreateEducationCubit,
@@ -107,12 +128,15 @@ class ApplicantCreateEducationHome extends StatelessWidget {
         }
       }, builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(title: const Text('Add Education',
-            style: TextStyle(color: Colors.white,
-              fontSize: 22,
+          appBar: AppBar(
+            title: const Text(
+              'Add Education',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+              ),
             ),
-          ),
-            backgroundColor: Color(0xff1B75BC),
+            backgroundColor: const Color(0xff1B75BC),
           ),
           body: Center(
             child: SingleChildScrollView(
@@ -132,60 +156,93 @@ class ApplicantCreateEducationHome extends StatelessWidget {
                         const SizedBox(
                           height: 30.0,
                         ),
-                        defaultFormField(
-                          controller: educationLevelController,
-                          type: TextInputType.text,
-                          validate: (String value) {
-                            if (value.isEmpty) {
-                              return 'please enter your education level';
+
+                        SizedBox(
+                          child: defaultDropDownList(
+                              ApplicantCreateEducationCubit.get(context)
+                                  .educationLevel, (value) {
+                            if (value != null) {
+                              ApplicantCreateEducationCubit.get(context)
+                                  .changeEducationLevelState(value);
                             }
-                          },
-                          label: 'Education Level',
-                          prefix: Icons.school,
+                          }, educationLevelDropDownMenuItems2),
                         ),
+
+                        // defaultFormField(
+                        //   controller: educationLevelController,
+                        //   type: TextInputType.text,
+                        //   validate: (String value) {
+                        //     if (value.isEmpty) {
+                        //       return 'please enter your education level';
+                        //     }
+                        //   },
+                        //   label: 'Education Level',
+                        //   prefix: Icons.school,
+                        // ),
                         const SizedBox(
                           height: 15.0,
                         ),
-                        defaultFormField(
-                          controller: facultyController,
-                          type: TextInputType.text,
-                          onSubmit: (value) {
-                            if (formKey.currentState.validate()) {
-                              // ApplicantCreateEducationCubit.get(context).userLogin(
-                              //   email: emailController.text,
-                              //   password: passwordController.text,
-                              // );
-                            }
-                          },
-                          validate: (String value) {
-                            if (value.isEmpty) {
-                              return 'enter Value';
-                            }
-                          },
-                          label: 'faculty',
-                          prefix: Icons.grade,
-                        ),
+
+                        defaultDropDownList(
+                            ApplicantCreateEducationCubit.get(context).faculty,
+                            (value) {
+                          if (value != null) {
+                            ApplicantCreateEducationCubit.get(context)
+                                .changeFacultyState(value);
+                          }
+                        }, facultiesDropDownMenuItems2),
+
+                        // defaultFormField(
+                        //   controller: facultyController,
+                        //   type: TextInputType.text,
+                        //   onSubmit: (value) {
+                        //     if (formKey.currentState.validate()) {
+                        //       // ApplicantCreateEducationCubit.get(context).userLogin(
+                        //       //   email: emailController.text,
+                        //       //   password: passwordController.text,
+                        //       // );
+                        //     }
+                        //   },
+                        //   validate: (String value) {
+                        //     if (value.isEmpty) {
+                        //       return 'enter Value';
+                        //     }
+                        //   },
+                        //   label: 'faculty',
+                        //   prefix: Icons.grade,
+                        // ),
                         const SizedBox(
                           height: 15,
                         ),
+
+                        defaultDropDownList(
+                            ApplicantCreateEducationCubit.get(context)
+                                .university, (value) {
+                          if (value != null) {
+                            ApplicantCreateEducationCubit.get(context)
+                                .changeNationalityState(value);
+                          }
+                        }, dropDownMenuItems2),
+
                         const SizedBox(
                           height: 15.0,
                         ),
-                        ListTile(
-                          title: const Text('What is university?'),
-                          trailing: DropdownButton<String>(
-                            // Must be one of items.value.
-                            value: ApplicantCreateEducationCubit.get(context)
-                                .university,
-                            onChanged: (String newValue) {
-                              if (newValue != null) {
-                                ApplicantCreateEducationCubit.get(context)
-                                    .changeNationalityState(newValue);
-                              }
-                            },
-                            items: _dropDownMenuItems2,
-                          ),
-                        ),
+
+                        // ListTile(
+                        //   title: const Text('What is university?'),
+                        //   trailing: DropdownButton<String>(
+                        //     // Must be one of items.value.
+                        //     value: ApplicantCreateEducationCubit.get(context)
+                        //         .university,
+                        //     onChanged: (String newValue) {
+                        //       if (newValue != null) {
+                        //         ApplicantCreateEducationCubit.get(context)
+                        //             .changeNationalityState(newValue);
+                        //       }
+                        //     },
+                        //     items: _dropDownMenuItems2,
+                        //   ),
+                        // ),
                         defaultFormField(
                           controller: startdateTimeController,
                           type: TextInputType.datetime,
@@ -194,12 +251,10 @@ class ApplicantCreateEducationHome extends StatelessWidget {
                           onTap: () {
                             showDatePicker(
                               context: context,
-
                               initialDate: DateTime.now(),
                               firstDate: DateTime.parse('1990-05-03'),
                               lastDate: DateTime.now(),
                             ).then((value) {
-
                               startdateTimeController.text =
                                   DateFormat.yMMMd().format(value).toString();
                             });
@@ -209,11 +264,9 @@ class ApplicantCreateEducationHome extends StatelessWidget {
                           height: 15,
                         ),
                         defaultFormField(
-
                           controller: enddateTimeController,
                           type: TextInputType.datetime,
                           prefix: Icons.calendar_month,
-
                           label: "end date",
                           onTap: () {
                             showDatePicker(
@@ -246,37 +299,41 @@ class ApplicantCreateEducationHome extends StatelessWidget {
                                         endDate: enddateTimeController.text,
                                         startDate: startdateTimeController.text,
                                         uId: CacheHelper.getData(key: 'uId'));
-                                navigateTo(
-                                    context, ApplicantCreateEducationHome());
+                                navigateTo(context,
+                                    const ApplicantCreateEducationHome());
                                 educationLevelController =
                                     TextEditingController();
                                 facultyController = TextEditingController();
-                                startdateTimeController = TextEditingController();
+                                startdateTimeController =
+                                    TextEditingController();
                                 enddateTimeController = TextEditingController();
                               }
                               {}
                             },
                             text: 'Save and Add Another Education',
                             isUpperCase: true,
-                            background: Color(0xff1B75BC),
+                            background: const Color(0xff1B75BC),
                             radius: 50,
                             width: 300,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
 
-
-                    Center(
-                      child: defaultButton(
+                        Center(
+                          child: defaultButton(
                             function: () {
                               if (formKey.currentState.validate()) {
                                 ApplicantCreateEducationCubit.get(context)
                                     .EducationCreate(
                                         educationLevel:
-                                            educationLevelController.text,
-                                        faculty: facultyController.text,
+                                            ApplicantCreateEducationCubit.get(
+                                                    context)
+                                                .educationLevel,
+                                        faculty: ApplicantCreateEducationCubit
+                                                .get(context)
+                                            .faculty,
                                         university:
                                             ApplicantCreateEducationCubit.get(
                                                     context)
@@ -284,18 +341,18 @@ class ApplicantCreateEducationHome extends StatelessWidget {
                                         endDate: enddateTimeController.text,
                                         startDate: startdateTimeController.text,
                                         uId: CacheHelper.getData(key: 'uId'));
-                                navigateTo(
-                                    context, ApplicantCreateExperienceHome());
+                                navigateTo(context,
+                                    const ApplicantCreateExperienceHome());
                               }
                               {}
                             },
                             text: 'Save and Continue',
-                        background: Color(0xff1B75BC),
-                        radius: 50,
-                        width: 300,
+                            background: const Color(0xff1B75BC),
+                            radius: 50,
+                            width: 300,
                             isUpperCase: true,
                           ),
-                    ),
+                        ),
                       ]),
                 ),
               ),

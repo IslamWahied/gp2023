@@ -8,7 +8,7 @@ import 'package:gp2023/modules/applicant_create_Experience/cubit/states.dart';
 
 class ApplicantCreateExperienceCubit
     extends Cubit<ApplicantCreateExperienceStates> {
-  var university = "MTI";
+  var position = "Team leader";
   ApplicantCreateExperienceCubit()
       : super(ApplicantCreateExperienceInitialState());
 
@@ -40,13 +40,10 @@ class ApplicantCreateExperienceCubit
     });
   }
 
-  void changeCityState(String cityOut) {
-    university = cityOut;
-    emit(ApplicantCreateExperienceChangeCityState());
-  }
 
-  void changeNationalityState(String nationalityOut) {
-    university = nationalityOut;
-    emit(ApplicantCreateExperienceChangeNationalityState());
+
+  void changePositionState(String position) {
+    position = position;
+    emit(ApplicantCreateExperienceChangePositionState());
   }
 }

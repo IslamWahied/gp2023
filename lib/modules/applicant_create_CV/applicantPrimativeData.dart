@@ -2,9 +2,11 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp2023/models/jopTitleModel.dart';
 import 'package:gp2023/modules/applicant_app_states_module/cubit/states.dart';
 import 'package:gp2023/modules/applicant_create_CV/cubit/states.dart';
 import 'package:intl/intl.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../../shared/components/components.dart';
 import '../../shared/network/local/cache_helper.dart';
@@ -13,8 +15,6 @@ import 'cubit/cubit.dart';
 
 class ApplicantPrimativeDataHome extends StatelessWidget {
   const ApplicantPrimativeDataHome({Key key}) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -67,18 +67,21 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
       "Akhmim",
       "Matareya"
     ];
+    List<String> countries=  ["United States", "Canada", "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and/or Barbuda", "Argentina", "Armenia", "Egypt"];
+    List<String> jopTitles= ['IT','HR'];
+    List<String> grades= ['Excellence'];
 
-    final List<DropdownMenuItem<String>> _dropDownMenuItems = cities
+    final List<DropdownMenuItem<String>> citiesDropDownMenuItems = cities
         .map(
           (String value) => DropdownMenuItem<String>(
             value: value,
-            child: Text(value,
-
+            child: Text(
+              value,
             ),
           ),
         )
         .toList();
-    final List<DropdownMenuItem<String>> _dropDownMenuItems2 = nationality
+    final List<DropdownMenuItem<String>> nationalityDropDownMenuItems2 = nationality
         .map(
           (String value) => DropdownMenuItem<String>(
             value: value,
@@ -86,6 +89,42 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
           ),
         )
         .toList();
+
+
+
+
+
+    final List<DropdownMenuItem<String>> jopTitleDropDownMenuItems2 = jopTitles
+        .map(
+          (String value) => DropdownMenuItem<String>(
+        value: value,
+        child: Text(value),
+      ),
+    )
+        .toList();
+
+    final List<DropdownMenuItem<String>> gradeDropDownMenuItems2 = grades
+        .map(
+          (String value) => DropdownMenuItem<String>(
+        value: value,
+        child: Text(value),
+      ),
+    )
+        .toList();
+
+
+    final List<DropdownMenuItem<String>> countryDropDownMenuItems2 = countries
+        .map(
+          (String value) => DropdownMenuItem<String>(
+        value: value,
+        child: Text(value),
+      ),
+    )
+        .toList();
+
+
+
+
 
     return BlocProvider(
       create: (BuildContext context) => ApplicantPrimativeDataCubit(),
@@ -106,15 +145,25 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
             value: state.uId,
           ).then((value) {});
         }
-      }, builder: (context, state) {
+      },
+          builder: (context, state) {
+            var cubit=ApplicantPrimativeDataCubit.get(context);
+            // final jopTitle = cubit.JopTitleItems.map(
+            //         (element) => MultiSelectItem<JopTitleData>(element, element.name)).toList();
+
+
+
         return Scaffold(
-          appBar: AppBar(title: const Text('create CV',
-            style: TextStyle(color: Colors.white,
-              fontSize: 22,
+          appBar: AppBar(
+            title: const Text(
+              'create CV',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+              ),
             ),
+            backgroundColor: const Color(0xff1B75BC),
           ),
-              backgroundColor: Color(0xff1B75BC),
-        ),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -125,96 +174,105 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
                     children: [
                       Text(
                         'Personal Details',
-
                         style: Theme.of(context).textTheme.bodyLarge.copyWith(
-                            color:Colors.grey,
-
+                              color: Colors.grey,
                             ),
                       ),
                       const SizedBox(
-                        height: 30.0,
+                        height: 10.0,
                       ),
 
-                      defaultFormField(
-                        controller: jobTitleController,
-                        type: TextInputType.text,
-                        validate: (String value) {
-                          if (value.isEmpty) {
-                            return 'please enter your job title';
-                          }
-                        },
-                        label: 'Job Title',
-                        prefix: Icons.person,
+
+
+                      const Text(
+                        'Jop Title',
+                        style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
                       ),
                       const SizedBox(
-                        height: 15.0,
+                        height: 10,
                       ),
-                      defaultFormField(
-                        controller: degreeController,
-                        type: TextInputType.number,
-                        onSubmit: (value) {
-                          if (formKey.currentState.validate()) {
-                            // ApplicantPrimativeDataCubit.get(context).userLogin(
-                            //   email: emailController.text,
-                            //   password: passwordController.text,
-                            // );
-                          }
-                        },
-                        validate: (String value) {
-                          if (value.isEmpty) {
-                            return 'enter Value';
-                          }
-                        },
-                        label: 'Grade',
-                        prefix: Icons.grade,
+                      defaultDropDownList(
+                          ApplicantPrimativeDataCubit.get(context).jopTitle,
+                              (value)=> ApplicantPrimativeDataCubit.get(context).changeJopTitleState(value),
+                          jopTitleDropDownMenuItems2),
+
+                      const SizedBox(
+                        height: 10,
                       ),
+                      const Text(
+                          'Grade',
+                          style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
+                      ),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+
+                      defaultDropDownList(
+                          ApplicantPrimativeDataCubit.get(context).grade,
+                              (value)=> ApplicantPrimativeDataCubit.get(context).changeGradeState(value),
+                          gradeDropDownMenuItems2),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                          'Countries',
+                          style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
+                      ),
+
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      defaultDropDownList(
+                          ApplicantPrimativeDataCubit.get(context).country,
+                              (value)=> ApplicantPrimativeDataCubit.get(context).changeCountryState(value),
+                          countryDropDownMenuItems2),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                          'City',
+                          style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
+                      ),
+
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      defaultDropDownList(
+                          ApplicantPrimativeDataCubit.get(context).city,
+                              (value)=> ApplicantPrimativeDataCubit.get(context).changeCityState(value),
+                          citiesDropDownMenuItems),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                          'Nationality',
+                          style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      defaultDropDownList(
+                          ApplicantPrimativeDataCubit.get(context).nationality,
+                              (value)=> ApplicantPrimativeDataCubit.get(context).changeNationalityState(value),
+                          nationalityDropDownMenuItems2),
+
                       const SizedBox(
                         height: 15,
                       ),
-                      ListTile(
-                        title: const Text('What is your City? ',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),),
 
-                        trailing: DropdownButton<String>(
-                          // Must be one of items.value.
-                          value:
-                              ApplicantPrimativeDataCubit.get(context).city,
-                          onChanged: (String newValue) {
-                            if (newValue != null) {
-                              ApplicantPrimativeDataCubit.get(context)
-                                  .changeCityState(newValue);
-                            }
-                          },
-                          items: _dropDownMenuItems,
-                        ),
+
+                      const Text(
+                          'Date of birth',
+                          style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
                       ),
                       const SizedBox(
-                        height: 15.0,
-                      ),
-                      ListTile(
-                        title: const Text('What is nationality?',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-
-                        ),
-
-                        trailing: DropdownButton<String>(
-                          // Must be one of items.value.
-                          value: ApplicantPrimativeDataCubit.get(context)
-                              .nationality,
-                          onChanged: (String newValue) {
-                            if (newValue != null) {
-                              ApplicantPrimativeDataCubit.get(context)
-                                  .changeNationalityState(newValue);
-                            }
-                          },
-                          items: _dropDownMenuItems2,
-                        ),
+                        height: 10,
                       ),
                       defaultFormField(
                         controller: dateTimeController,
@@ -233,18 +291,16 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
                           });
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
-
                       Center(
-                        child:
-                        defaultButton(
+                        child: defaultButton(
                           function: () {
                             if (formKey.currentState.validate()) {
                               ApplicantPrimativeDataCubit.get(context).cvCreate(
-                                  jobTitle: jobTitleController.text,
-                                  degree: degreeController.text,
+                                  jobTitle: ApplicantPrimativeDataCubit.get(context).jopTitle,
+                                  degree: ApplicantPrimativeDataCubit.get(context).grade,
                                   city: ApplicantPrimativeDataCubit.get(context)
                                       .city,
                                   nationality:
@@ -254,18 +310,15 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
                                   gender: "Male",
                                   uId: CacheHelper.getData(key: 'uId'));
                               navigateTo(
-                                  context, ApplicantCreateEducationHome());
+                                  context, const ApplicantCreateEducationHome());
                             }
-
-
                           },
                           text: 'next',
-                          background: Color(0xff1B75BC),
+                          background: const Color(0xff1B75BC),
                           radius: 50,
                           width: 200,
                           isUpperCase: true,
                         ),
-
                       ),
                     ]),
               ),

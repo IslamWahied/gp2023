@@ -6,17 +6,17 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gp2023/layout/applicant_layout/applicant_layout.dart';
-import 'package:gp2023/layout/home_layout/ask_create_cv.dart';
 import 'package:gp2023/layout/home_layout/cubit/states.dart';
 import 'package:gp2023/layout/home_layout/cubit/cubit.dart';
+import 'package:gp2023/modules/applicant_create_CV/applicantPrimativeData.dart';
 import 'package:gp2023/shared/components/components.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 
 
 
-class WorkableLayout extends StatelessWidget {
-  const WorkableLayout({Key key}) : super(key: key);
+class AskCreateCvScreen extends StatelessWidget {
+  const AskCreateCvScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +24,7 @@ class WorkableLayout extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
+
           body: ConditionalBuilder(
             condition: WorkableCubit.get(context).model != null,
             builder: (context) {
@@ -31,11 +32,47 @@ class WorkableLayout extends StatelessWidget {
 
               return Column(
                 children: [
+                    SizedBox(
+                    height: MediaQuery.of(context).size.height*0.05,
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          child: ElevatedButton(
+                            onPressed: (){
+                              navigateAndFinish(context, const ApplicantLayout());
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: HexColor('1B74BB'),
+                              onPrimary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32.0),
+                              ),
+                            ),
+                            child: const Text(
+                              "Skip",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        )
+
+                      ],),
+                  ),
                   const SizedBox(
-                    height: 70,
+                    height: 15,
                   ),
                   const Image(
-                    image: AssetImage('assets/images/start.jpg'),
+                    image: AssetImage('assets/images/cv.png'),
                     width: 300,
                     height: 200,
                     fit: BoxFit.cover,
@@ -44,7 +81,7 @@ class WorkableLayout extends StatelessWidget {
                     height: 50,
                   ),
                   Text(
-                    'Explore and find the best career for you!',
+                    'Create your CV',
                     style: TextStyle(
                         color: HexColor('#000000'),
                         fontWeight: FontWeight.w600,
@@ -74,7 +111,7 @@ class WorkableLayout extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const Text(
-                            'Prepare for and secure your ideal internship, placement, or graduate position.',
+                            'Create your CV in order to have preference for job acceptance.',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.normal,
@@ -86,7 +123,7 @@ class WorkableLayout extends StatelessWidget {
                             height: MediaQuery.of(context).size.height * 0.08,
                             child: ElevatedButton(
                               onPressed: (){
-                                navigateAndFinish(context, const AskCreateCvScreen());
+                                navigateTo(context, const ApplicantPrimativeDataHome());
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.white,
@@ -96,7 +133,7 @@ class WorkableLayout extends StatelessWidget {
                                 ),
                               ),
                               child: Text(
-                                "Get Started",
+                                "Create Cv",
                                 style: TextStyle(
                                     color: HexColor('1B74BB'),
                                     fontSize: 20,
@@ -112,7 +149,7 @@ class WorkableLayout extends StatelessWidget {
               );
             },
             fallback: (context) =>
-                const Center(child: CircularProgressIndicator()),
+            const Center(child: CircularProgressIndicator()),
           ),
         );
       },

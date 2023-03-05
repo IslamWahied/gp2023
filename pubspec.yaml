@@ -53,6 +53,7 @@ dependencies:
   intl: 
   conditional_builder: ^1.0.2
   hexcolor: ^3.0.1
+  multi_select_flutter: ^4.1.2
 dependency_overrides:
   firebase_core_platform_interface: 4.5.3
 

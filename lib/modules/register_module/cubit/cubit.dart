@@ -39,6 +39,9 @@ class WorkableRegisterCubit extends Cubit<WorkableRegisterStates> {
           password: password,
           isApplicant: isApplicant);
     }).catchError((error) {
+      print('===============================');
+      print(error.toString());
+      print('===============================');
       emit(WorkableRegisterErrorState(error.toString()));
     });
   }

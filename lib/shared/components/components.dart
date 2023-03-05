@@ -83,21 +83,21 @@ Widget defaultFormField({
         labelText: label,
         prefixIcon: Icon(
           prefix,
-          color:Color(0xff1B75BC),
-
-
+          color: const Color(0xff1B75BC),
         ),
         suffixIcon: suffix != null
             ? IconButton(
                 onPressed: suffixPressed,
                 icon: Icon(
                   suffix,
-                    color:Color(0xff1B75BC),
-
+                  color: const Color(0xff1B75BC),
                 ),
               )
             : null,
-        border: const OutlineInputBorder(),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+          borderSide: BorderSide(color: Colors.white),
+        ),
       ),
     );
 
@@ -175,15 +175,15 @@ Widget initiateHrDrawer(BuildContext context) {
       // Important: Remove any padding from the ListView.
       padding: EdgeInsets.zero,
       children: <Widget>[
-        new UserAccountsDrawerHeader(
+        UserAccountsDrawerHeader(
           onDetailsPressed: () {},
           accountName: Text(CacheHelper.getData(key: 'name')),
           accountEmail: Text(CacheHelper.getData(key: 'email')),
           currentAccountPicture: GestureDetector(
             onTap: () {},
-            child: CircleAvatar(
+            child: const CircleAvatar(
               backgroundImage: NetworkImage(
-                  'https://www.seekpng.com/png/detail/115-1150053_avatar-png-transparent-png-royalty-free-default-user.png',
+                'https://www.seekpng.com/png/detail/115-1150053_avatar-png-transparent-png-royalty-free-default-user.png',
               ),
 
               // child: Icon(
@@ -193,24 +193,23 @@ Widget initiateHrDrawer(BuildContext context) {
               // ),
             ),
           ),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Color(0xff1B75BC),
           ),
         ),
         ListTile(
-            leading: Icon(Icons.content_paste),
-            title: Text('Create CV'),
-            onTap: () {
-              navigateTo(context, ApplicantPrimativeDataHome());
-            }),
+          leading: const Icon(Icons.edit_note),
+          title: const Text('Edit your Cv'),
+          onTap: () { navigateTo(context, const ApplicantPrimativeDataHome());},
+        ),
         ListTile(
-          leading: Icon(Icons.settings),
-          title: Text('Settings'),
+          leading: const Icon(Icons.settings),
+          title: const Text('Settings'),
           onTap: () {},
         ),
         ListTile(
-          leading: Icon(Icons.logout),
-          title: Text('Logout'),
+          leading: const Icon(Icons.logout),
+          title: const Text('Logout'),
           onTap: () {
             CacheHelper.removeData(key: 'name');
             CacheHelper.removeData(key: 'email');
@@ -229,13 +228,13 @@ Widget initiateDrawer(BuildContext context) {
       // Important: Remove any padding from the ListView.
       padding: EdgeInsets.zero,
       children: <Widget>[
-        new UserAccountsDrawerHeader(
+        UserAccountsDrawerHeader(
           onDetailsPressed: () {},
           accountName: Text(CacheHelper.getData(key: 'name')),
           accountEmail: Text(CacheHelper.getData(key: 'email')),
           currentAccountPicture: GestureDetector(
             onTap: () {},
-            child: CircleAvatar(
+            child: const CircleAvatar(
               backgroundImage: NetworkImage(
                   'https://www.seekpng.com/png/detail/115-1150053_avatar-png-transparent-png-royalty-free-default-user.png'),
 
@@ -246,13 +245,13 @@ Widget initiateDrawer(BuildContext context) {
               // ),
             ),
           ),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: defaultColor,
           ),
         ),
         ListTile(
-          leading: Icon(Icons.logout),
-          title: Text('Logout'),
+          leading: const Icon(Icons.logout),
+          title: const Text('Logout'),
           onTap: () {
             CacheHelper.removeData(key: 'name');
             CacheHelper.removeData(key: 'email');
@@ -263,6 +262,38 @@ Widget initiateDrawer(BuildContext context) {
           },
         ),
       ],
+    ),
+  );
+}
+
+Widget defaultDropDownList(
+    String value, Function onChange, List<DropdownMenuItem<String>> items) {
+  return Container(
+    width: double.infinity,
+    decoration: BoxDecoration(
+        border: Border.all(color: Colors.blueAccent),
+      borderRadius: BorderRadius.circular(20),
+      color: Colors.white,
+    ),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: DropdownButton<String>(
+        isExpanded: true,
+        icon: const Icon(Icons.arrow_drop_down),
+        iconSize: 30.0,
+        underline: const SizedBox(),
+
+        style: const TextStyle(
+          color: Colors.black54,
+          fontSize: 20.0,
+        ),
+        // Must be one of items.value.
+
+        value: value,
+
+        onChanged: onChange,
+        items: items,
+      ),
     ),
   );
 }
