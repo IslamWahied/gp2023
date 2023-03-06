@@ -333,7 +333,7 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
                                       ApplicantPrimativeDataCubit.get(context)
                                           .nationality,
                                   dateOfBirth: dateTime,
-                                  gender: "Male",
+
                                   uId: CacheHelper.getData(key: 'uId'));
                               navigateTo(
                                   context, const ApplicantCreateEducationHome());

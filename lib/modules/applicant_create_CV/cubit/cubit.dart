@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gp2023/models/CVModel.dart';
 import 'package:gp2023/models/jopTitleModel.dart';
 import 'package:gp2023/modules/applicant_create_CV/cubit/states.dart';
+import 'package:gp2023/shared/network/local/cache_helper.dart';
 
 import '../../../models/EducationModel.dart';
 //import 'package:gp2023/shared/network/end_points.dart';
@@ -25,18 +26,31 @@ class ApplicantPrimativeDataCubit extends Cubit<ApplicantPrimativeDataStates> {
       {@required String jobTitle,
       @required String degree,
       @required String city,
-      @required String gender,
+
       @required String nationality,
       @required DateTime dateOfBirth,
       @required String uId}) {
+
+
+
+
+
+  bool isMale =   CacheHelper.getData(key: 'isMale');
+
+  String gender = isMale? "Male":"Female";
+
     CVModel model = CVModel(
         city: city,
+        name : CacheHelper.getData(key: "name"),
+        phone :CacheHelper.getData(key: "phone"),
+        email :CacheHelper.getData(key: "email"),
         degree: degree,
         gender: gender,
         nationality: nationality,
         dateOfBirth: dateOfBirth,
         jobTitle: jobTitle,
-        uId: uId);
+        uId: uId
+    );
     saveCVData(model);
   }
 

@@ -19,9 +19,6 @@ class ApplicantLayout extends StatelessWidget {
           // String appBarText =
           //  CacheHelper.getData(key: 'name') + ' !' ?? 'hi, User!';
           return Scaffold(
-            body: ApplicantCubit.get(context)
-                .screens[ApplicantCubit.get(context).currentIndex],
-            drawer: initiateHrDrawer(context),
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               currentIndex: ApplicantCubit.get(context).currentIndex,
@@ -54,6 +51,9 @@ class ApplicantLayout extends StatelessWidget {
                 ),
               ],
             ),
+            body: ApplicantCubit.get(context).screens[ApplicantCubit.get(context).currentIndex],
+            drawer: initiateHrDrawer(context),
+
           );
         });
   }

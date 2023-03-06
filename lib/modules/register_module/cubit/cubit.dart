@@ -53,7 +53,8 @@ class WorkableRegisterCubit extends Cubit<WorkableRegisterStates> {
       @required String uId,
       @required bool isMale,
       @required String password,
-      @required bool isApplicant}) {
+      @required bool isApplicant
+      }) {
     WorkableUserModel model = WorkableUserModel(
         name: name,
         email: email,
@@ -62,10 +63,14 @@ class WorkableRegisterCubit extends Cubit<WorkableRegisterStates> {
         isMale: isMale,
         isEmailVerified: false,
         password: password,
+
         isApplicant: isApplicant);
     CacheHelper.saveData(key: 'uId', value: uId);
     CacheHelper.saveData(key: 'name', value: name);
+    CacheHelper.saveData(key: 'phone', value: phone);
     CacheHelper.saveData(key: 'email', value: email);
+    CacheHelper.saveData(key: 'isMale', value: isMale);
+
     FirebaseFirestore.instance
         .collection('Applicant')
         .doc(uId)
@@ -83,8 +88,7 @@ class WorkableRegisterCubit extends Cubit<WorkableRegisterStates> {
 
   void changePasswordVisibility() {
     isPassword = !isPassword;
-    suffix =
-        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    suffix = isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
 
     emit(WorkableRegisterChangePasswordVisibilityState());
   }

@@ -22,7 +22,7 @@ class ApplicantCreateSkillsCubit extends Cubit<ApplicantCreateSkillsStates> {
 
   void saveSkillData(SkillModel M) {
     FirebaseFirestore.instance
-        .collection('Applicant Skills')
+        .collection('ApplicantSkills')
         .add(M.toMap())
         .then((value) {
       emit(ApplicantCreateSkillsSuccessState(M.uId));

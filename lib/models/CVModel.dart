@@ -9,6 +9,9 @@ class CVModel {
   String nationality;
   DateTime dateOfBirth;
   String uId;
+  String email;
+  String phone;
+  String name;
 
 
 
@@ -20,6 +23,9 @@ class CVModel {
     this.nationality,
     this.dateOfBirth,
     this.uId,
+    this.email,
+    this.phone,
+    this.name,
 
   });
 
@@ -32,6 +38,10 @@ class CVModel {
     nationality = json['nationality'];
     dateOfBirth = json['dateOfBirth'];
     uId = json['uId'];
+
+    email = json['email'];
+    name = json['name'];
+    phone = json['phone'];
   }
 
   Map<String, dynamic> toMap() {
@@ -43,6 +53,10 @@ class CVModel {
       'nationality': nationality,
       'dateOfBirth': dateOfBirth,
       'uId': uId,
+
+      'name': name,
+      'email': email,
+      'phone': phone,
 
     };
   }
