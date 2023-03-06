@@ -20,12 +20,12 @@ class ApplicantHome extends StatefulWidget {
 class _ApplicantHomeState extends State<ApplicantHome> {
   @override
   Widget build(BuildContext context) {
-    var body =
-        new Container(child: ApplicantRegisterCubit.get(context).listofJobs);
-    ApplicantRegisterCubit.get(context).searchList ??
-        (ApplicantRegisterCubit.get(context).searchList = jobList);
-    ApplicantRegisterCubit.get(context).jobsCount ?? //      get jobs here
-        (ApplicantRegisterCubit.get(context).jobsCount = jobList.length);
+    var  applicantRegisterCubit = ApplicantRegisterCubit.get(context);
+    var body = new Container(child: applicantRegisterCubit.listofJobs);
+    applicantRegisterCubit.searchList ??
+        (applicantRegisterCubit.searchList = jobList);
+    applicantRegisterCubit.jobsCount ?? //      get jobs here
+        (applicantRegisterCubit.jobsCount = jobList.length);
     return ConditionalBuilder(
       condition: ApplicantRegisterCubit.get(context).searchList != null,
       builder: (context) {

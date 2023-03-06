@@ -98,6 +98,7 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) =>
               ApplicantRegisterCubit()..getApplicantRegisterString(),
         ),
+        
       ],
 
       // test

@@ -19,16 +19,36 @@ class FilterCubit extends Cubit<FilterStates> {
   static FilterCubit get(context) => BlocProvider.of(context);
 
 
+  var city = "Cairo";
+  var country = "Egypt";
+  var nationality = "Egyptian";
+  var jopTitle="IT";
+  var grade="Excellence";
+
   var formKey = GlobalKey<FormState>();
   var salaryFromController = TextEditingController();
   var salaryToController = TextEditingController();
 
 
+  void changeJopTitleState(String JopTitle) {
+    jopTitle = JopTitle;
+    emit(FilterApply());
+  }
+  void changeCityTitleState(String City) {
+    city = City;
+    emit(FilterApply());
+  }
+
+  void changeCountryTitleState(String Country) {
+    print(country);
+    country = Country;
+    emit(FilterApply2());
+  }
+
+ String  employeeType = "";
   double salaryFrom;
   double salaryTo;
-  void filterApply(
-      BuildContext context,
-      {double salaryfrom, double salaryto, String companyName}) {
+  void filterApply(BuildContext context, {double salaryfrom, double salaryto, String companyName}) {
     salaryFrom = salaryfrom;
     salaryTo = salaryto;
 
