@@ -42,8 +42,8 @@ class ApplicantCreateExperienceCubit
 
 
 
-  void changePositionState(String position) {
-    position = position;
+  void changePositionState(String positionValue) {
+    position = positionValue;
     emit(ApplicantCreateExperienceChangePositionState());
   }
 }

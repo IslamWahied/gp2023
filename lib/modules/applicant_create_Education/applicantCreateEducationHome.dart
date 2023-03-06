@@ -76,8 +76,8 @@ class ApplicantCreateEducationHome extends StatelessWidget {
       "Akhmim",
       "Matareya"
     ];
-    List<String> educationLevels = ["Master", "Doctor"];
-    List<String> faculties = ["computer", "Engineer"];
+    List<String> educationLevels = ["Masters", "phd",'bachelor s'];
+    List<String> faculties = ["computer science", "Engineering",'bussiness','Medicine',' Law','Art',' Mass Communication'];
 
     final List<DropdownMenuItem<String>> dropDownMenuItems2 = uniList
         .map(
@@ -130,7 +130,7 @@ class ApplicantCreateEducationHome extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text(
-              'Add Education',
+              'Education',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 22,
@@ -156,7 +156,13 @@ class ApplicantCreateEducationHome extends StatelessWidget {
                         const SizedBox(
                           height: 30.0,
                         ),
-
+                        const Text(
+                            'Education Level',
+                            style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
+                        ),
+                        const SizedBox(
+                          height: 15.0,
+                        ),
                         SizedBox(
                           child: defaultDropDownList(
                               ApplicantCreateEducationCubit.get(context)
@@ -179,6 +185,20 @@ class ApplicantCreateEducationHome extends StatelessWidget {
                         //   label: 'Education Level',
                         //   prefix: Icons.school,
                         // ),
+
+
+
+
+                        const SizedBox(
+                          height: 15.0,
+                        ),
+
+
+
+                        const Text(
+                            'Faculty',
+                            style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
+                        ),
                         const SizedBox(
                           height: 15.0,
                         ),
@@ -214,7 +234,13 @@ class ApplicantCreateEducationHome extends StatelessWidget {
                         const SizedBox(
                           height: 15,
                         ),
-
+                        const Text(
+                            'University',
+                            style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
+                        ),
+                        const SizedBox(
+                          height: 15.0,
+                        ),
                         defaultDropDownList(
                             ApplicantCreateEducationCubit.get(context)
                                 .university, (value) {
@@ -346,10 +372,10 @@ class ApplicantCreateEducationHome extends StatelessWidget {
                               }
                               {}
                             },
-                            text: 'Save and Continue',
+                            text: 'next',
                             background: const Color(0xff1B75BC),
                             radius: 50,
-                            width: 300,
+                            width: 200,
                             isUpperCase: true,
                           ),
                         ),

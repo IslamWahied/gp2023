@@ -10,8 +10,8 @@ import '../../applicant_create_CV/cubit/states.dart';
 
 class ApplicantCreateEducationCubit
     extends Cubit<ApplicantCreateEducationStates> {
-  var educationLevel = "Master";
-  var faculty = "computer";
+  var educationLevel = "Masters";
+  var faculty = "computer science";
   var university = "MTI";
   ApplicantCreateEducationCubit()
       : super(ApplicantCreateEducationInitialState());
@@ -57,13 +57,13 @@ class ApplicantCreateEducationCubit
 
 
 
-  void changeEducationLevelState(String educationLevel) {
-    educationLevel = educationLevel;
+  void changeEducationLevelState(String educationLevelValue) {
+    educationLevel = educationLevelValue;
     emit(ApplicantCreateEducationChangeeducationLevelState());
   }
 
-  void changeFacultyState(String faculty) {
-    faculty = faculty;
+  void changeFacultyState(String facultyValue) {
+    faculty = facultyValue;
     emit(ApplicantCreateEducationChangeFacultyState());
   }
 

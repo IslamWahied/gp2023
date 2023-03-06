@@ -23,7 +23,16 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
     var degreeController = TextEditingController();
     var dateTime = DateTime.now();
     var dateTimeController = TextEditingController();
-    List<String> nationality = ['Egyptian', 'American'];
+    List<String> nationality = ['Egyptian',
+      'American',
+      'Canadian',
+      'Russian',
+      'Australian'
+        'Bahamaian',
+      'Brazilian',
+      'French',
+      'Greek'
+    ];
     List<String> cities = [
       "Cairo",
       "Alexandria",
@@ -68,8 +77,25 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
       "Matareya"
     ];
     List<String> countries=  ["United States", "Canada", "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and/or Barbuda", "Argentina", "Armenia", "Egypt"];
-    List<String> jopTitles= ['IT','HR'];
-    List<String> grades= ['Excellence'];
+    List<String> jopTitles= [
+      'IT',
+      'HR',
+      'Web Developer',
+      'UX Designer & UI Developer',
+      'Data Entry',
+      'Information Security Analyst',
+      'Artificial Intelligence Engineer',
+      'Technical Specialist',
+      'Graphic Designer',
+      'Marketing Communications Manager',
+      'Call Center',
+      'Accounting Analyst',
+      'Finance Manager',
+      'Accountant',
+      'Geological Engineer',
+      'Maintenance Engineer',
+      'Software Engineering'];
+    List<String> grades= ['Excellent','Very Good','Good'];
 
     final List<DropdownMenuItem<String>> citiesDropDownMenuItems = cities
         .map(
@@ -156,7 +182,7 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text(
-              'create CV',
+              'My CV',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 22,
@@ -217,7 +243,7 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
                         height: 10,
                       ),
                       const Text(
-                          'Countries',
+                          'Country',
                           style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
                       ),
 

@@ -51,7 +51,7 @@ class ApplicantCreateSkillsHome extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text(
-              'Add Skills',
+              ' Skills',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 22,
@@ -133,12 +133,12 @@ class ApplicantCreateSkillsHome extends StatelessWidget {
                               }
                               {}
                             },
-                            text: 'Save and Continue',
+                            text: 'save',
                             background: const Color(0xff1B75BC),
                             radius: 50,
-                            width: 300,
+                            width: 200,
                             isUpperCase: true,
-                          ),
+                          ),`
                         ),
                       ]),
                 ),

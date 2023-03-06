@@ -17,7 +17,7 @@ class ApplicantPrimativeDataCubit extends Cubit<ApplicantPrimativeDataStates> {
   var country = "Egypt";
   var nationality = "Egyptian";
   var jopTitle="IT";
-  var grade="Excellence";
+  var grade="Excellent";
   ApplicantPrimativeDataCubit() : super(ApplicantPrimativeDataInitialState());
 
   static ApplicantPrimativeDataCubit get(context) => BlocProvider.of(context);
@@ -34,7 +34,6 @@ class ApplicantPrimativeDataCubit extends Cubit<ApplicantPrimativeDataStates> {
         degree: degree,
         gender: gender,
         nationality: nationality,
-
         dateOfBirth: dateOfBirth,
         jobTitle: jobTitle,
         uId: uId);
@@ -54,25 +53,25 @@ class ApplicantPrimativeDataCubit extends Cubit<ApplicantPrimativeDataStates> {
     emit(ApplicantPrimativeDataChangeCityState());
   }
 
-  void changeCountryState(String country) {
-    country = country;
+  void changeCountryState(String countryValue) {
+    country = countryValue;
     emit(ApplicantPrimativeDataChangeCountryState());
   }
 
 
-  void changeNationalityState(String nationality) {
-    nationality = nationality;
+  void changeNationalityState(String nationalityValue) {
+    nationality = nationalityValue;
     emit(ApplicantPrimativeDataChangeNationalityState());
   }
 
 
-  void changeJopTitleState(String JopTitle) {
-    jopTitle = JopTitle;
+  void changeJopTitleState(String JopTitleValue) {
+    jopTitle = JopTitleValue;
     emit(ApplicantPrimativeDataChangeJopTitleState());
   }
 
-  void changeGradeState(String Grade) {
-    Grade = Grade;
+  void changeGradeState(String GradeValue) {
+    grade = GradeValue;
     emit(ApplicantPrimativeDataChangeGradeState());
   }
 

@@ -17,7 +17,7 @@ class JobSearch {
   Stream<List<JobModel>> initSearching({@required String textEntered,
   @required String fieldName}) =>
     FirebaseFirestore.instance
-        .collection('jobs')
+        .collection('Jobs')
         .where(fieldName, isGreaterThanOrEqualTo: textEntered)
         .where(fieldName, isLessThan: textEntered + 'z')
         .snapshots()

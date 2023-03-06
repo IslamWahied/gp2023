@@ -198,23 +198,29 @@ Widget initiateHrDrawer(BuildContext context) {
           ),
         ),
         ListTile(
-          leading: const Icon(Icons.edit_note),
-          title: const Text('Edit your Cv'),
+          leading: const Icon(Icons.edit_note,color:Color(0xff1B75BC) ,
+          ),
+          title: const Text('My Cv'),
           onTap: () { navigateTo(context, const ApplicantPrimativeDataHome());},
         ),
         ListTile(
-          leading: const Icon(Icons.settings),
+          leading: const Icon(Icons.settings ,color:Color(0xff1B75BC)),
           title: const Text('Settings'),
           onTap: () {},
         ),
         ListTile(
-          leading: const Icon(Icons.logout),
-          title: const Text('Logout'),
+          leading: const Icon(Icons.logout,color: Colors.red,),
+          title: const Text('Logout',
+            style: TextStyle(
+              color: Colors.red,
+            ),
+          ),
           onTap: () {
             CacheHelper.removeData(key: 'name');
             CacheHelper.removeData(key: 'email');
             CacheHelper.removeData(key: 'uId');
             navigateTo(context, WorkableLoginScreen());
+
           },
         ),
       ],

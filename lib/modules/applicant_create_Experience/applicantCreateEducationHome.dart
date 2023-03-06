@@ -21,7 +21,20 @@ class ApplicantCreateExperienceHome extends StatelessWidget {
     var startdateTimeController = TextEditingController();
     var enddateTimeController = TextEditingController();
 
-    List<String> positions = ["Team leader", "Manager"];
+    List<String> positions = ["Team leader",
+      "Manager",
+      'Administrative assistant',
+      'Business analyst',
+      'Sales representative',
+      'Marketing manager',
+      'Product manager',
+      'Software engineer',
+      'Project Manager',
+      'Marketing Coordinator',
+      'Supervisor',
+      'Quality Control',
+      'Accounting Staff',
+    ];
     final List<DropdownMenuItem<String>> positionDropDownMenuItems2 = positions
         .map(
           (String value) => DropdownMenuItem<String>(
@@ -54,7 +67,7 @@ class ApplicantCreateExperienceHome extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text(
-              'Add Experience',
+              ' Experience',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 22,
@@ -221,10 +234,10 @@ class ApplicantCreateExperienceHome extends StatelessWidget {
                               }
                               {}
                             },
-                            text: 'Save and Continue',
+                            text: 'next',
                             background: const Color(0xff1B75BC),
                             radius: 50,
-                            width: 300,
+                            width: 200,
                             isUpperCase: true,
                           ),
                         ),
