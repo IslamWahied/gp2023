@@ -14,28 +14,116 @@ import '../../filter_module/cubit/cubit.dart';
 //import 'package:gp2023/shared/network/end_points.dart';
 
 class ApplicantRegisterCubit extends Cubit<ApplicantRegisterStates> {
-  ApplicantRegisterCubit() : super(ApplicantHomeInitialState()) {
-    listofJobs = JobSearch().streamBuilder('', 'JobTitle');
-  }
+  ApplicantRegisterCubit() : super(ApplicantHomeInitialState());
+  // {
+  //   // listofJobs = JobSearch().streamBuilder('', 'JobTitle');
+  // //  listTempOfJobs = listMasterOfJobs;
+  // }
 
   static ApplicantRegisterCubit get(context) => BlocProvider.of(context);
 
   void getApplicantRegisterString() {
     emit(ApplicantUserStringState());
   }
+List<String> d = [];
+  getAllJobs() async {
+    FirebaseFirestore.instance.collection('Jobs').snapshots().listen((event) {
+      listOfJobsMaster =event.docs.map((x) => JobModel.fromJson(x.data())).toList();
+       listOfJobs = listOfJobsMaster;
 
-  void updateJobList(BuildContext context) {}
+      listOfJobs.forEach((element) {
+        d.add(element.JobType);
+      });
+
+      print(d.toList().toSet().toList());
+      emit(ApplicantHomeSearchState());
+    });
+  }
+
+  void updateJobList(BuildContext context) {
+
+  }
 
   int jobsCount;
   List<job_model> searchList;
-  StreamBuilder<List<JobModel>> listofJobs;
+ List<JobModel> listOfJobs = [];
+ List<JobModel> listOfJobsMaster = [];
+  //StreamBuilder<List<JobModel>> listofJobs;
 
-  void changeListSearch(String search, BuildContext context) {
-    if (search.isEmpty) {
-      listofJobs = JobSearch().streamBuilder('', 'JobTitle');
-    } else {
-      listofJobs = JobSearch().streamBuilder(search, 'JobTitle');
-      emit(ApplicantHomeSearchState());
-    }
+
+void changeListSearch(String search, BuildContext context) {
+  if (search.isEmpty) {
+    listOfJobs = listOfJobsMaster;
+  } else {
+    listOfJobs = listOfJobsMaster.where((element) => (element.jobDescription + element.jobTitle + element.salary.toString() + element.JobType).toLowerCase().contains(search.toLowerCase())).toList();
+    emit(ApplicantHomeSearchState());
   }
+}
+
+  void changeListFromFilter(
+      {String jobTitle,
+      String jobType,
+      String city,
+      String country,
+      double salary,
+      String fromDate,
+      String jopType,
+      String toDate,
+      BuildContext context}) {
+
+
+  // print(jobTitle);
+  // print(jobType);
+  // print(country);
+  // print(city);
+  //
+  // print(salary);
+  // print(fromDate);
+  //
+  // print(toDate);
+    // if (search.isEmpty) {
+    //   listOfJobs = listOfJobsMaster;
+    // } else {
+    DateTime startDate = DateTime.parse(fromDate);
+    DateTime endDate = DateTime.parse(toDate);
+
+    DateTime now = DateTime.now();
+
+      listOfJobs = listOfJobsMaster.where((element) => element.jobTitle.toLowerCase() == jobTitle.toLowerCase() &&  element.salary.toString() == salary.toString() && jobType.contains(element.JobType)
+          // &&
+          // element.startDate.isAfter(startDate)
+          // &&
+          // element.endDate.isBefore(endDate)
+
+      ).toList();
+
+      emit(ApplicantHomeSearchState());
+    // }
+  }
+
+
+
+
+  void restListFromFilter() {
+
+
+
+    // if (search.isEmpty) {
+    //   listOfJobs = listOfJobsMaster;
+    // } else {
+    listOfJobs = listOfJobsMaster.toList();
+    emit(ApplicantHomeSearchState());
+    // }
+  }
+
+
+
+  // void changeListSearch(String search, BuildContext context) {
+  //   if (search.isEmpty) {
+  //     listofJobs = JobSearch().streamBuilder('', 'JobTitle');
+  //   } else {
+  //     listofJobs = JobSearch().streamBuilder(search, 'JobTitle');
+  //     emit(ApplicantHomeSearchState());
+  //   }
+  // }
 }
