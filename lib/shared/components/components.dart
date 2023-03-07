@@ -278,6 +278,7 @@ Widget defaultDropDownList(
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: DropdownButton<String>(
+
         isExpanded: true,
 
         icon: const Icon(Icons.arrow_drop_down),

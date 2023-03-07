@@ -14,7 +14,9 @@ class JobSearch {
     'assets/IconsImage/mozila.png',
     'assets/IconsImage/reddit.jpeg',
   ];
-  Stream<List<JobModel>> initSearching({@required String textEntered,
+  Stream<List<JobModel>> initSearching(
+      {
+  @required String textEntered,
   @required String fieldName}) =>
     FirebaseFirestore.instance
         .collection('Jobs')

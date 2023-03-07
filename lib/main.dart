@@ -14,10 +14,13 @@ import 'package:gp2023/shared/cubit/states.dart';
 import 'package:gp2023/modules/login_module/login.dart';
 import 'package:gp2023/layout/home_layout/cubit/cubit.dart';
 import 'package:gp2023/layout/applicant_layout/cubit/cubit.dart';
+import 'package:intl/intl.dart';
 import './shared/network/local/cache_helper.dart';
 import './shared/components/constants.dart';
 import 'layout/hr_layout/cubit/cubit.dart';
 import 'package:flutter/rendering.dart';
+
+import 'modules/filter_module/cubit/cubit.dart';
 
 
 void main() async {
@@ -79,8 +82,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (BuildContext context) => AppCubit()
-            ..changeAppMode(
+          create: (BuildContext context) => AppCubit()..changeAppMode(
               fromShared: isDark,
             ),
         ),
@@ -96,9 +98,13 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (BuildContext context) =>
-              ApplicantRegisterCubit()..getApplicantRegisterString(),
+              ApplicantRegisterCubit()..getApplicantRegisterString()..getAllJobs(),
         ),
-        
+        BlocProvider(
+          create: (BuildContext context) => FilterCubit()..fromDateTimeController.text = DateFormat.yMMMd().format(DateTime.now()).toString()..toDateTimeController.text = DateFormat.yMMMd().format(DateTime.now()).toString(),
+
+        ),
+
       ],
 
       // test
