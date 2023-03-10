@@ -36,7 +36,10 @@ class CVModel {
 
     gender = json['gender'];
     nationality = json['nationality'];
-    dateOfBirth = json['dateOfBirth'];
+
+
+
+    dateOfBirth = DateTime.fromMicrosecondsSinceEpoch(json['dateOfBirth'].microsecondsSinceEpoch);
     uId = json['uId'];
 
     email = json['email'];

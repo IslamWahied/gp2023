@@ -34,3 +34,13 @@ class ApplicantPrimativeDataChangeJopTitleState extends ApplicantPrimativeDataSt
 
 class ApplicantPrimativeDataChangeGradeState extends ApplicantPrimativeDataStates {}
 
+
+class ApplicantPrimativeDataChangeGenderState extends ApplicantPrimativeDataStates {}
+
+
+class ApplicantPrimativeDataSetRegisterDataState extends ApplicantPrimativeDataStates {}
+
+
+
+class ApplicantPrimativeDataGetCvDataState
+    extends ApplicantPrimativeDataStates {}

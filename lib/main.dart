@@ -1,13 +1,25 @@
 // @dart=2.9
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gp2023/layout/applicant_layout/applicant_layout.dart';
-import 'package:gp2023/layout/home_layout/home_screen.dart';
-import 'package:gp2023/modules/applicant_create_CV/applicantPrimativeData.dart';
+import 'package:gp2023/layout/hr_layout/cubit/cubit.dart';
+
+
+import 'package:gp2023/modules/applicant_create_CV/cubit/cubit.dart';
+
+import 'package:gp2023/modules/applicant_create_Education/cubit/cubit.dart';
+
+import 'package:gp2023/modules/applicant_create_Experience/cubit/cubit.dart';
+import 'package:gp2023/modules/applicant_create_Skills/applicantCreateSkills.dart';
+
+import 'package:gp2023/modules/applicant_create_Skills/cubit/cubit.dart';
 import 'package:gp2023/modules/applicant_home_module/cubit/cubit.dart';
+import 'package:gp2023/modules/filter_module/cubit/cubit.dart';
 import 'package:gp2023/shared/bloc_observer.dart';
+import 'package:gp2023/shared/components/constants.dart';
+import 'package:gp2023/shared/network/local/cache_helper.dart';
 import 'package:gp2023/shared/styles/themes.dart';
 import 'package:gp2023/shared/cubit/cubit.dart';
 import 'package:gp2023/shared/cubit/states.dart';
@@ -15,12 +27,8 @@ import 'package:gp2023/modules/login_module/login.dart';
 import 'package:gp2023/layout/home_layout/cubit/cubit.dart';
 import 'package:gp2023/layout/applicant_layout/cubit/cubit.dart';
 import 'package:intl/intl.dart';
-import './shared/network/local/cache_helper.dart';
-import './shared/components/constants.dart';
-import 'layout/hr_layout/cubit/cubit.dart';
-import 'package:flutter/rendering.dart';
 
-import 'modules/filter_module/cubit/cubit.dart';
+
 
 
 void main() async {
@@ -104,6 +112,26 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => FilterCubit()..fromDateTimeController.text = DateFormat.yMMMd().format(DateTime.now()).toString()..toDateTimeController.text = DateFormat.yMMMd().format(DateTime.now()).toString(),
 
         ),
+        BlocProvider(
+          create: (BuildContext context) =>ApplicantPrimativeDataCubit()..setRegisterData()
+
+        ),
+
+        BlocProvider(
+            create: (BuildContext context) =>  ApplicantCreateEducationCubit()
+
+        ),
+
+        BlocProvider(
+            create: (BuildContext context) =>ApplicantCreateExperienceCubit()
+
+        ),
+        BlocProvider(
+            create: (BuildContext context) =>ApplicantCreateSkillsCubit()
+
+        ),
+
+
 
       ],
 
@@ -117,8 +145,8 @@ class MyApp extends StatelessWidget {
             darkTheme: darkTheme,
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
-            home: startWidget,
-             // home: ApplicantPrimativeDataHome(),
+          //  home: startWidget,
+                home:ApplicantCreateSkillsHome(),
           );
         },
       ),

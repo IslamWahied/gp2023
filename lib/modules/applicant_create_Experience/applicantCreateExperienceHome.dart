@@ -2,30 +2,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:gp2023/modules/applicant_create_Experience/applicantCreateExperienceHome.dart';
-import 'package:gp2023/shared/components/components.dart';
+import 'package:gp2023/modules/applicant_create_Skills/applicantCreateSkills.dart';
 import 'package:gp2023/shared/components/constants.dart';
-import 'package:gp2023/shared/network/local/cache_helper.dart';
-
 import 'package:intl/intl.dart';
 
+import '../../shared/components/components.dart';
+import '../../shared/network/local/cache_helper.dart';
 import 'cubit/cubit.dart';
 import 'cubit/states.dart';
 
-class ApplicantCreateEducationHome extends StatelessWidget {
-  const ApplicantCreateEducationHome({Key key}) : super(key: key);
+class ApplicantCreateExperienceHome extends StatelessWidget {
+  const ApplicantCreateExperienceHome({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ApplicantCreateEducationCubit,
-        ApplicantCreateEducationStates>(listener: (context, state) {
-      if (state is ApplicantCreateEducationErrorState) {
+    return BlocConsumer<ApplicantCreateExperienceCubit,
+        ApplicantCreateExperienceStates>(listener: (context, state) {
+      if (state is ApplicantCreateExperienceErrorState) {
         showToast(
           text: state.error,
           state: ToastStates.ERROR,
         );
       }
-      if (state is ApplicantCreateEducationSuccessState &&
+      if (state is ApplicantCreateExperienceSuccessState &&
           CacheHelper.getData(key: 'isApplicant') &&
           (CacheHelper.getData(key: 'email') != null ||
               CacheHelper.getData(key: 'name') != null)) {
@@ -35,29 +34,9 @@ class ApplicantCreateEducationHome extends StatelessWidget {
         ).then((value) {});
       }
     }, builder: (context, state) {
-      var cubit = ApplicantCreateEducationCubit.get(context);
-
-      final List<DropdownMenuItem<String>> dropDownMenuItems2 = uniList
-          .map(
-            (String value) => DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            ),
-          )
-          .toList();
-
-      final List<DropdownMenuItem<String>> educationLevelDropDownMenuItems2 =
-          educationLevelsList
-              .map(
-                (String value) => DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                ),
-              )
-              .toList();
-
-      final List<DropdownMenuItem<String>> facultiesDropDownMenuItems2 =
-          facultiesList
+      var cubit = ApplicantCreateExperienceCubit.get(context);
+      final List<DropdownMenuItem<String>> positionDropDownMenuItems2 =
+          positionsList
               .map(
                 (String value) => DropdownMenuItem<String>(
                   value: value,
@@ -69,7 +48,7 @@ class ApplicantCreateEducationHome extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Education',
+            ' Experience',
             style: TextStyle(
               color: Colors.white,
               fontSize: 22,
@@ -87,7 +66,7 @@ class ApplicantCreateEducationHome extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Add your education data',
+                        'Add your Experience data',
                         style: Theme.of(context).textTheme.bodyLarge.copyWith(
                               color: Colors.grey,
                             ),
@@ -96,75 +75,76 @@ class ApplicantCreateEducationHome extends StatelessWidget {
                         height: 30.0,
                       ),
 
-                      //Education Level
-                      dropDownListTitle('Education Level'),
+                      //Company Name
+
+                      const SizedBox(
+                        height: 15.0,
+                      ),
+                      dropDownListTitle('Company Name'),
                       const SizedBox(
                         height: 15.0,
                       ),
                       SizedBox(
-                        child: defaultDropDownList(cubit.educationLevelsValue,
-                            (value) {
-                          if (value != null) {
-                            cubit.changeEducationLevelState(value);
-                          }
-                        }, educationLevelDropDownMenuItems2),
+                        child: defaultFormField(
+                          controller: cubit.companyNameController,
+                          type: TextInputType.text,
+                          label: 'Company Name',
+                          prefix: Icons.school,
+                        ),
                       ),
 
-                      //Faculty
+                      //Position
                       const SizedBox(
                         height: 15.0,
                       ),
-                      dropDownListTitle('Faculty'),
+                      const Text('Position',
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Color(0xff1B75BC),
+                              fontWeight: FontWeight.w700)),
                       const SizedBox(
                         height: 15.0,
                       ),
                       SizedBox(
                         child:
-                            defaultDropDownList(cubit.facultiesValue, (value) {
+                            defaultDropDownList(cubit.positionsValue, (value) {
                           if (value != null) {
-                            cubit.changeFacultyState(value);
+                            cubit.changePositionState(value);
                           }
-                        }, facultiesDropDownMenuItems2),
+                        }, positionDropDownMenuItems2),
                       ),
 
-                      //University
+                      //start date
 
                       const SizedBox(
                         height: 15,
                       ),
-                      dropDownListTitle('University'),
+                      dropDownListTitle('Start date'),
                       const SizedBox(
-                        height: 15.0,
+                        height: 15,
                       ),
-                      SizedBox(
-                        child:
-                            defaultDropDownList(cubit.universityValue, (value) {
-                          if (value != null) {
-                            cubit.changeNationalityState(value);
-                          }
-                        }, dropDownMenuItems2),
-                      ),
-                      const SizedBox(
-                        height: 15.0,
-                      ),
-
-                      //First date
                       SizedBox(
                           child: defaultDateOfBirth(
                               cubit.startDateTimeController, context, (value) {
                         cubit.startDateTimeController.text =
                             DateFormat.yMMMd().format(value).toString();
-                      }, "start date")),
+                      }, "Start date")),
+
+                      //End date
                       const SizedBox(
                         height: 15,
                       ),
-                      //End date
+                      dropDownListTitle('End date'),
+                      const SizedBox(
+                        height: 15,
+                      ),
+
                       SizedBox(
                           child: defaultDateOfBirth(
                               cubit.endDateTimeController, context, (value) {
                         cubit.endDateTimeController.text =
                             DateFormat.yMMMd().format(value).toString();
-                      }, "end date")),
+                      }, "End date")),
 
                       const SizedBox(
                         height: 30.0,
@@ -173,57 +153,48 @@ class ApplicantCreateEducationHome extends StatelessWidget {
                         child: defaultButton(
                           function: () {
                             if (cubit.formKey.currentState.validate()) {
-                              cubit.EducationCreate(
-                                  educationLevel:
-                                      cubit.educationLevelsValue,
-                                  faculty: cubit.facultiesValue,
-                                  university:
-                                      ApplicantCreateEducationCubit.get(context)
-                                          .universityValue,
+                              cubit.ExperienceCreate(
+                                  companyName: cubit.companyNameController.text,
+                                  position: ApplicantCreateExperienceCubit.get(
+                                          context)
+                                      .positionsValue,
                                   endDate: cubit.endDateTimeController.text,
                                   startDate: cubit.startDateTimeController.text,
                                   uId: CacheHelper.getData(key: 'uId'));
 
-                              cubit.educationLevelsValue =defaultDropDownListValue;
-
-                              cubit.facultiesValue = defaultDropDownListValue;
                               cubit.startDateTimeController =
                                   TextEditingController();
                               cubit.endDateTimeController =
                                   TextEditingController();
+                              cubit.companyNameController =
+                                  TextEditingController();
+                              cubit.positionsValue = defaultDropDownListValue;
                             }
-
                           },
-                          text: 'Save and Add Another Education',
-                          isUpperCase: true,
+                          text: 'Save and Add Another Experience',
                           background: const Color(0xff1B75BC),
                           radius: 50,
                           width: 300,
+                          isUpperCase: true,
                         ),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-
                       Center(
                         child: defaultButton(
                           function: () {
                             if (cubit.formKey.currentState.validate()) {
-                              cubit.EducationCreate(
-                                  educationLevel:
-                                      ApplicantCreateEducationCubit.get(context)
-                                          .educationLevelsValue,
-                                  faculty:
-                                      ApplicantCreateEducationCubit.get(context)
-                                          .facultiesValue,
-                                  university:
-                                      ApplicantCreateEducationCubit.get(context)
-                                          .universityValue,
+                              cubit.ExperienceCreate(
+                                  companyName: cubit.companyNameController.text,
+                                  position: ApplicantCreateExperienceCubit.get(
+                                          context)
+                                      .positionsValue,
                                   endDate: cubit.endDateTimeController.text,
                                   startDate: cubit.startDateTimeController.text,
                                   uId: CacheHelper.getData(key: 'uId'));
-                              navigateTo(context,
-                                  const ApplicantCreateExperienceHome());
+                              navigateTo(
+                                  context, const ApplicantCreateSkillsHome());
                             }
                             {}
                           },

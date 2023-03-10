@@ -1,16 +1,17 @@
+// ignore: file_names
 // @dart=2.9
-import 'package:conditional_builder/conditional_builder.dart';
+
+// ignore_for_file: file_names, duplicate_ignore
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp2023/models/jopTitleModel.dart';
-import 'package:gp2023/modules/applicant_app_states_module/cubit/states.dart';
 import 'package:gp2023/modules/applicant_create_CV/cubit/states.dart';
+import 'package:gp2023/modules/applicant_create_Education/applicantCreateEducationHome.dart';
+import 'package:gp2023/shared/components/components.dart';
+import 'package:gp2023/shared/components/constants.dart';
+import 'package:gp2023/shared/network/local/cache_helper.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
-
-import '../../shared/components/components.dart';
-import '../../shared/network/local/cache_helper.dart';
-import '../applicant_create_Education/applicantCreateEducationHome.dart';
 import 'cubit/cubit.dart';
 
 class ApplicantPrimativeDataHome extends StatelessWidget {
@@ -18,340 +19,299 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var formKey = GlobalKey<FormState>();
-    var jobTitleController = TextEditingController();
-    var degreeController = TextEditingController();
-    var dateTime = DateTime.now();
-    var dateTimeController = TextEditingController();
-    List<String> nationality = ['Egyptian',
-      'American',
-      'Canadian',
-      'Russian',
-      'Australian'
-        'Bahamaian',
-      'Brazilian',
-      'French',
-      'Greek'
-    ];
-    List<String> cities = [
-      "Cairo",
-      "Alexandria",
-      "Gizeh",
-      "Shubra El-Kheima",
-      "Port Said",
-      "Suez",
-      "Luxor",
-      "al-Mansura",
-      "El-Mahalla El-Kubra",
-      "Tanta",
-      "Asyut",
-      "Ismailia",
-      "Fayyum",
-      "Zagazig",
-      "Aswan",
-      "Damietta",
-      "Damanhur",
-      "al-Minya",
-      "Beni Suef",
-      "Qena",
-      "Sohag",
-      "Hurghada",
-      "6th of October City",
-      "Shibin El Kom",
-      "Banha",
-      "Kafr el-Sheikh",
-      "Arish",
-      "Mallawi",
-      "10th of Ramadan City",
-      "Bilbais",
-      "Marsa Matruh",
-      "Idfu",
-      "Mit Ghamr",
-      "Al-Hamidiyya",
-      "Desouk",
-      "Qalyub",
-      "Abu Kabir",
-      "Kafr el-Dawwar",
-      "Girga",
-      "Akhmim",
-      "Matareya"
-    ];
-    List<String> countries=  ["United States", "Canada", "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and/or Barbuda", "Argentina", "Armenia", "Egypt"];
-    List<String> jopTitles= [
-      'IT',
-      'HR',
-      'Web Developer',
-      'UX Designer & UI Developer',
-      'Data Entry',
-      'Information Security Analyst',
-      'Artificial Intelligence Engineer',
-      'Technical Specialist',
-      'Graphic Designer',
-      'Marketing Communications Manager',
-      'Call Center',
-      'Accounting Analyst',
-      'Finance Manager',
-      'Accountant',
-      'Geological Engineer',
-      'Maintenance Engineer',
-      'Software Engineering'];
-    List<String> grades= ['Excellent','Very Good','Good'];
-
-    final List<DropdownMenuItem<String>> citiesDropDownMenuItems = cities
-        .map(
-          (String value) => DropdownMenuItem<String>(
-            value: value,
-            child: Text(
-              value,
-            ),
-          ),
-        )
-        .toList();
-    final List<DropdownMenuItem<String>> nationalityDropDownMenuItems2 = nationality
-        .map(
-          (String value) => DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          ),
-        )
-        .toList();
-
-
-
-
-
-    final List<DropdownMenuItem<String>> jopTitleDropDownMenuItems2 = jopTitles
-        .map(
-          (String value) => DropdownMenuItem<String>(
-        value: value,
-        child: Text(value),
-      ),
-    )
-        .toList();
-
-    final List<DropdownMenuItem<String>> gradeDropDownMenuItems2 = grades
-        .map(
-          (String value) => DropdownMenuItem<String>(
-        value: value,
-        child: Text(value),
-      ),
-    )
-        .toList();
-
-
-    final List<DropdownMenuItem<String>> countryDropDownMenuItems2 = countries
-        .map(
-          (String value) => DropdownMenuItem<String>(
-        value: value,
-        child: Text(value),
-      ),
-    )
-        .toList();
-
-
-
-
-
-    return BlocProvider(
-      create: (BuildContext context) => ApplicantPrimativeDataCubit(),
-      child: BlocConsumer<ApplicantPrimativeDataCubit,
-          ApplicantPrimativeDataStates>(listener: (context, state) {
-        if (state is ApplicantPrimativeDataErrorState) {
-          showToast(
-            text: state.error,
-            state: ToastStates.ERROR,
-          );
-        }
-        if (state is ApplicantPrimativeDataSuccessState &&
-            CacheHelper.getData(key: 'isApplicant') &&
-            (CacheHelper.getData(key: 'email') != null ||
-                CacheHelper.getData(key: 'name') != null)) {
-          CacheHelper.saveData(
-            key: 'uId',
-            value: state.uId,
-          ).then((value) {});
-        }
-      },
-          builder: (context, state) {
-            var cubit=ApplicantPrimativeDataCubit.get(context);
-            // final jopTitle = cubit.JopTitleItems.map(
-            //         (element) => MultiSelectItem<JopTitleData>(element, element.name)).toList();
-
-
-
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              'My CV',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-              ),
-            ),
-            backgroundColor: const Color(0xff1B75BC),
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Form(
-                key: formKey,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Personal Details',
-                        style: Theme.of(context).textTheme.bodyLarge.copyWith(
-                              color: Colors.grey,
-                            ),
-                      ),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-
-
-
-                      const Text(
-                        'Jop Title',
-                        style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      defaultDropDownList(
-                          ApplicantPrimativeDataCubit.get(context).jopTitle,
-                              (value)=> ApplicantPrimativeDataCubit.get(context).changeJopTitleState(value),
-                          jopTitleDropDownMenuItems2),
-
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                          'Grade',
-                          style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
-                      ),
-
-                      const SizedBox(
-                        height: 10,
-                      ),
-
-
-                      defaultDropDownList(
-                          ApplicantPrimativeDataCubit.get(context).grade,
-                              (value)=> ApplicantPrimativeDataCubit.get(context).changeGradeState(value),
-                          gradeDropDownMenuItems2),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                          'Country',
-                          style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
-                      ),
-
-
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      defaultDropDownList(
-                          ApplicantPrimativeDataCubit.get(context).country,
-                              (value)=> ApplicantPrimativeDataCubit.get(context).changeCountryState(value),
-                          countryDropDownMenuItems2),
-
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                          'City',
-                          style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
-                      ),
-
-
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      defaultDropDownList(
-                          ApplicantPrimativeDataCubit.get(context).city,
-                              (value)=> ApplicantPrimativeDataCubit.get(context).changeCityState(value),
-                          citiesDropDownMenuItems),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                          'Nationality',
-                          style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-
-                      defaultDropDownList(
-                          ApplicantPrimativeDataCubit.get(context).nationality,
-                              (value)=> ApplicantPrimativeDataCubit.get(context).changeNationalityState(value),
-                          nationalityDropDownMenuItems2),
-
-                      const SizedBox(
-                        height: 15,
-                      ),
-
-
-                      const Text(
-                          'Date of birth',
-                          style:TextStyle(fontSize: 15,color: Color(0xff1B75BC),fontWeight: FontWeight.w700)
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      defaultFormField(
-                        controller: dateTimeController,
-                        type: TextInputType.datetime,
-                        prefix: Icons.calendar_month,
-                        label: "date of birth",
-                        onTap: () {
-                          showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime.parse('1970-05-03'),
-                            lastDate: DateTime.now(),
-                          ).then((value) {
-                            dateTimeController.text =
-                                DateFormat.yMMMd().format(value).toString();
-                          });
-                        },
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Center(
-                        child: defaultButton(
-                          function: () {
-                            if (formKey.currentState.validate()) {
-                              ApplicantPrimativeDataCubit.get(context).cvCreate(
-                                  jobTitle: ApplicantPrimativeDataCubit.get(context).jopTitle,
-                                  degree: ApplicantPrimativeDataCubit.get(context).grade,
-                                  city: ApplicantPrimativeDataCubit.get(context)
-                                      .city,
-                                  nationality:
-                                      ApplicantPrimativeDataCubit.get(context)
-                                          .nationality,
-                                  dateOfBirth: dateTime,
-
-                                  uId: CacheHelper.getData(key: 'uId'));
-                              navigateTo(
-                                  context, const ApplicantCreateEducationHome());
-                            }
-                          },
-                          text: 'next',
-                          background: const Color(0xff1B75BC),
-                          radius: 50,
-                          width: 200,
-                          isUpperCase: true,
-                        ),
-                      ),
-                    ]),
-              ),
-            ),
-          ),
+    return BlocConsumer<ApplicantPrimativeDataCubit,
+        ApplicantPrimativeDataStates>(listener: (context, state) {
+      if (state is ApplicantPrimativeDataErrorState) {
+        showToast(
+          text: state.error,
+          state: ToastStates.ERROR,
         );
-      }),
-    );
+      }
+      if (state is ApplicantPrimativeDataSuccessState &&
+          CacheHelper.getData(key: 'isApplicant') &&
+          (CacheHelper.getData(key: 'email') != null ||
+              CacheHelper.getData(key: 'name') != null)) {
+        CacheHelper.saveData(
+          key: 'uId',
+          value: state.uId,
+        ).then((value) {});
+      }
+    }, builder: (context, state) {
+      var cubit = ApplicantPrimativeDataCubit.get(context);
+
+      final List<DropdownMenuItem<String>> citiesDropDownMenuItems = citiesList
+          .map(
+            (String value) => DropdownMenuItem<String>(
+              value: value,
+              child: Text(
+                value,
+              ),
+            ),
+          )
+          .toList();
+
+      final List<DropdownMenuItem<String>> nationalityDropDownMenuItems2 =
+          nationalityList
+              .map(
+                (String value) => DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                ),
+              )
+              .toList();
+
+      final List<DropdownMenuItem<String>> jopTitleDropDownMenuItems2 =
+          jopTitlesList
+              .map(
+                (String value) => DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                ),
+              )
+              .toList();
+
+      final List<DropdownMenuItem<String>> genderDropDownMenuItems2 = genderList
+          .map(
+            (String value) => DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            ),
+          )
+          .toList();
+
+      final List<DropdownMenuItem<String>> gradeDropDownMenuItems2 = gradesList
+          .map(
+            (String value) => DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            ),
+          )
+          .toList();
+
+      final List<DropdownMenuItem<String>> countryDropDownMenuItems2 =
+          countriesList
+              .map(
+                (String value) => DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                ),
+              )
+              .toList();
+
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'My CV',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+            ),
+          ),
+          backgroundColor: const Color(0xff1B75BC),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Form(
+              key: cubit.formKey,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Personal Details',
+                      style: Theme.of(context).textTheme.bodyLarge.copyWith(
+                            color: Colors.grey,
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    // Name
+                    dropDownListTitle('Name'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      child: defaultFormField(
+                          controller: cubit.nameController,
+                          type: TextInputType.name,
+                          label: 'Name',
+                          suffix: Icons.person,
+                          prefix: null),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    // Email
+
+                    dropDownListTitle('Email'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      child: defaultFormField(
+                          controller: cubit.emailController,
+                          type: TextInputType.emailAddress,
+                          label: 'Email',
+                          suffix: Icons.email,
+                          prefix: null),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    // Phone
+
+                    dropDownListTitle('Phone'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      child: defaultFormField(
+                          controller: cubit.phoneController,
+                          type: TextInputType.phone,
+                          label: 'Phone',
+                          suffix: Icons.phone,
+                          prefix: null),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    // Gender
+
+                    dropDownListTitle('Gender'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    defaultDropDownList(
+                        cubit.genderValue,
+                        (value) => cubit.changeGenderState(value),
+                        genderDropDownMenuItems2),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    // Jop Title
+
+                    dropDownListTitle('Jop Title'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    defaultDropDownList(
+                        cubit.jopTitleValue,
+                        (value) => cubit.changeJopTitleState(value),
+                        jopTitleDropDownMenuItems2),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    // Grade
+
+                    dropDownListTitle('Grade'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    defaultDropDownList(
+                        cubit.gradeValue,
+                        (value) => cubit.changeGradeState(value),
+                        gradeDropDownMenuItems2),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    // Country
+
+                    dropDownListTitle('Country'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    defaultDropDownList(
+                        cubit.countriesValue,
+                        (value) => cubit.changeCountryState(value),
+                        countryDropDownMenuItems2),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    // City
+
+                    dropDownListTitle('City'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    defaultDropDownList(
+                        cubit.cityValue,
+                        (value) => cubit.changeCityState(value),
+                        citiesDropDownMenuItems),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    // Nationality
+
+                    dropDownListTitle('Nationality'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    defaultDropDownList(
+                        cubit.nationalitiesValue,
+                        (value) => cubit.changeNationalityState(value),
+                        nationalityDropDownMenuItems2),
+                    const SizedBox(
+                      height: 15,
+                    ),
+
+                    // Date of birth
+
+                    dropDownListTitle('Date of birth'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                        child: defaultDateOfBirth(
+                            cubit.dateTimeController, context, (value) {
+                      cubit.dateTimeController.text =
+                          DateFormat.yMMMd().format(value).toString();
+                    },'Date of birth')),
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+                    // Button
+
+                    Center(
+                      child: defaultButton(
+                        function: () {
+                          if (cubit.formKey.currentState.validate()) {
+                            cubit.cvCreate(
+                                jobTitle: cubit.jopTitleValue,
+                                degree: cubit.gradeValue,
+                                city: cubit.cityValue,
+                                nationality: cubit.nationalitiesValue,
+                                dateOfBirth: cubit.dateTime,
+                                uId: CacheHelper.getData(key: 'uId'),
+                                name: cubit.nameController.text.toString(),
+                                phone: cubit.phoneController.text.toString(),
+                                email: cubit.emailController.text.toString(),
+                                gender: cubit.genderValue.toString());
+                            navigateTo(
+                                context, const ApplicantCreateEducationHome());
+                          }
+                        },
+                        text: 'next',
+                        background: const Color(0xff1B75BC),
+                        radius: 50,
+                        width: 200,
+                        isUpperCase: true,
+                      ),
+                    ),
+                  ]),
+            ),
+          ),
+        ),
+      );
+    });
   }
 }

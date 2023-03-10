@@ -84,12 +84,12 @@ void changeListSearch(String search, BuildContext context) {
     // if (search.isEmpty) {
     //   listOfJobs = listOfJobsMaster;
     // } else {
-    DateTime startDate = DateTime.parse(fromDate);
-    DateTime endDate = DateTime.parse(toDate);
+    // DateTime startDate = DateTime.parse(fromDate);
+    // DateTime endDate = DateTime.parse(toDate);
 
     DateTime now = DateTime.now();
 
-      listOfJobs = listOfJobsMaster.where((element) => element.jobTitle.toLowerCase() == jobTitle.toLowerCase() &&  element.salary.toString() == salary.toString() && jobType.contains(element.JobType)
+      listOfJobs = listOfJobsMaster.where((element) => element.jobTitle.toLowerCase() == jobTitle.toLowerCase() &&  element.salary == salary && jobType.contains(element.JobType)
           // &&
           // element.startDate.isAfter(startDate)
           // &&

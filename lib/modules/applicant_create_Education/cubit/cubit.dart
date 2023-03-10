@@ -1,22 +1,31 @@
 // @dart=2.9
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gp2023/models/EducationModel.dart';
+import 'package:gp2023/modules/applicant_create_CV/cubit/states.dart';
 import 'package:gp2023/modules/applicant_create_Education/cubit/states.dart';
-
-import '../../applicant_create_CV/cubit/states.dart';
-//import 'package:gp2023/shared/network/end_points.dart';
+import 'package:gp2023/shared/components/constants.dart';
 
 class ApplicantCreateEducationCubit
     extends Cubit<ApplicantCreateEducationStates> {
-  var educationLevel = "Masters";
-  var faculty = "computer science";
-  var university = "MTI";
   ApplicantCreateEducationCubit()
       : super(ApplicantCreateEducationInitialState());
 
   static ApplicantCreateEducationCubit get(context) => BlocProvider.of(context);
+
+  var formKey = GlobalKey<FormState>();
+
+
+  var startDateTimeController = TextEditingController();
+  var endDateTimeController = TextEditingController();
+
+  var educationLevelsValue = defaultDropDownListValue;
+  var facultiesValue = defaultDropDownListValue;
+  var universityValue = defaultDropDownListValue;
+
   void EducationCreate(
       {@required String educationLevel,
       @required String university,
@@ -46,76 +55,56 @@ class ApplicantCreateEducationCubit
   }
 
   void changeCityState(String cityOut) {
-    university = cityOut;
+    universityValue = cityOut;
     emit(ApplicantCreateEducationChangeCityState());
   }
 
   void changeNationalityState(String nationalityOut) {
-    university = nationalityOut;
+    universityValue = nationalityOut;
     emit(ApplicantCreateEducationChangeNationalityState());
   }
 
-
-
   void changeEducationLevelState(String educationLevelValue) {
-    educationLevel = educationLevelValue;
+    educationLevelsValue = educationLevelValue;
     emit(ApplicantCreateEducationChangeeducationLevelState());
   }
 
   void changeFacultyState(String facultyValue) {
-    faculty = facultyValue;
+    facultiesValue = facultyValue;
     emit(ApplicantCreateEducationChangeFacultyState());
   }
-
-
-
-
-
-
-
-
-
-
 }
-class ApplicantPrimativeDataCubit2 extends Cubit<ApplicantPrimativeDataStates> {
 
-  var faculty = "MTI univeristy";
+class ApplicantPrimativeDataCubit2 extends Cubit<ApplicantPrimativeDataStates> {
   ApplicantPrimativeDataCubit2() : super(ApplicantPrimativeDataInitialState());
 
   static ApplicantPrimativeDataCubit2 get(context) => BlocProvider.of(context);
-  void cvCreate(
-      {
-        @required educationLevel,
-        @required String university,
-        @required String faculty,
-        @required String startDate,
-        @required String endDate,
-        @required String uId,}) {
+
+  void cvCreate({
+    @required educationLevel,
+    @required String university,
+    @required String faculty,
+    @required String startDate,
+    @required String endDate,
+    @required String uId,
+  }) {
     EducationModel model = EducationModel(
       university: university,
       faculty: faculty,
       startDate: startDate,
       uId: uId,
-
-
-
     );
     saveCVData(model as EducationModel);
   }
 
   void saveCVData(EducationModel M) {
-    FirebaseFirestore.instance.collection('Education').add(M.toMap()).then((value) {
+    FirebaseFirestore.instance
+        .collection('Education')
+        .add(M.toMap())
+        .then((value) {
       emit(ApplicantPrimativeDataSuccessState(M.uId));
     }).catchError((error) {
       emit(ApplicantPrimativeDataErrorState(error.toString()));
     });
   }
-
-  void changeCityState(String facultyout) {
-    faculty = facultyout;
-    emit(ApplicantPrimativeDataChangeCityState());
-  }
-
-
-
 }

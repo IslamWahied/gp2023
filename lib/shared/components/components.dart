@@ -1,11 +1,12 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gp2023/modules/applicant_create_CV/applicantPrimativeData.dart';
 import 'package:gp2023/modules/login_module/login.dart';
+import 'package:gp2023/shared/components/constants.dart';
 import 'package:gp2023/shared/network/local/cache_helper.dart';
-import '../../modules/applicant_create_CV/applicantPrimativeData.dart';
-import '../cubit/cubit.dart';
-import '../styles/colors.dart';
+import 'package:gp2023/shared/styles/colors.dart';
+
 
 Widget logoIcon() => const Center(
       child: Image(
@@ -61,7 +62,7 @@ Widget defaultFormField({
   Function onChange,
   Function onTap,
   bool isPassword = false,
-  @required Function validate,
+  Function validate,
   @required String label,
   @required IconData prefix,
   IconData suffix,
@@ -77,7 +78,8 @@ Widget defaultFormField({
       onFieldSubmitted: onSubmit,
       onChanged: onChange,
       onTap: onTap,
-      validator: validate,
+      validator: validate??(value) => value == null||value == ''||value == " "
+          ? 'Please fill this field' : null,
       maxLines: maxLine,
       decoration: InputDecoration(
         labelText: label,
@@ -141,7 +143,7 @@ void showToast({
       msg: text,
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 5,
+      timeInSecForIosWeb: 3,
       backgroundColor: chooseToastColor(state),
       textColor: Colors.white,
       fontSize: 16.0,
@@ -198,19 +200,27 @@ Widget initiateHrDrawer(BuildContext context) {
           ),
         ),
         ListTile(
-          leading: const Icon(Icons.edit_note,color:Color(0xff1B75BC) ,
+          leading: const Icon(
+            Icons.edit_note,
+            color: Color(0xff1B75BC),
           ),
           title: const Text('My Cv'),
-          onTap: () { navigateTo(context, const ApplicantPrimativeDataHome());},
+          onTap: () {
+            navigateTo(context, const ApplicantPrimativeDataHome());
+          },
         ),
         ListTile(
-          leading: const Icon(Icons.settings ,color:Color(0xff1B75BC)),
+          leading: const Icon(Icons.settings, color: Color(0xff1B75BC)),
           title: const Text('Settings'),
           onTap: () {},
         ),
         ListTile(
-          leading: const Icon(Icons.logout,color: Colors.red,),
-          title: const Text('Logout',
+          leading: const Icon(
+            Icons.logout,
+            color: Colors.red,
+          ),
+          title: const Text(
+            'Logout',
             style: TextStyle(
               color: Colors.red,
             ),
@@ -220,7 +230,6 @@ Widget initiateHrDrawer(BuildContext context) {
             CacheHelper.removeData(key: 'email');
             CacheHelper.removeData(key: 'uId');
             navigateTo(context, WorkableLoginScreen());
-
           },
         ),
       ],
@@ -277,31 +286,68 @@ Widget defaultDropDownList(
   return Container(
     width: double.infinity,
     decoration: BoxDecoration(
-        border: Border.all(color: Colors.blueAccent),
+      border: Border.all(color: Colors.blueAccent),
       borderRadius: BorderRadius.circular(20),
       color: Colors.white,
     ),
     child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      child: DropdownButton<String>(
-
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      child: DropdownButtonFormField<String>(
         isExpanded: true,
-
+        validator: (value) => value == defaultDropDownListValue
+            ? 'Please fill this field' : null,
         icon: const Icon(Icons.arrow_drop_down),
         iconSize: 30.0,
-        underline: const SizedBox(),
+
+       // underline: const SizedBox(),
 
         style: const TextStyle(
           color: Colors.black54,
-          fontSize: 20.0,
+          fontSize: 18.0,
         ),
         // Must be one of items.value.
 
         value: value,
 
         onChanged: onChange,
+        decoration: const InputDecoration.collapsed(hintText: ''),
         items: items,
       ),
+
     ),
   );
 }
+
+Widget dropDownListTitle(String title) {
+  return Text(title,
+      style: const TextStyle(
+          fontSize: 15, color: Color(0xff1B75BC), fontWeight: FontWeight.w700));
+}
+
+
+
+Widget defaultDateOfBirth(TextEditingController controller,context ,Function then,String label)=>  SizedBox(
+  child: defaultFormField(
+    controller: controller,
+    type: TextInputType.datetime,
+    prefix: Icons.calendar_month,
+    label:label,
+    onTap: () {
+      showDatePicker(
+        builder: (BuildContext context, Widget child ) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              primaryColor:   primaryColor,
+              buttonTheme: const ButtonThemeData(
+                  textTheme: ButtonTextTheme.primary
+              ), colorScheme: ColorScheme.light(primary: primaryColor,).copyWith(secondary: primaryColor),
+            ), child: child,);},
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.parse('1950-01-01'),
+        lastDate: DateTime.now(),
+      ).then(then);
+    }
+  ),
+);
+

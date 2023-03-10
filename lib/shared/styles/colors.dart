@@ -1,8 +1,13 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 /// Colors
+
+var primaryColor=HexColor("#1B75BC");
+
+
 const defaultColor = Colors.blue;
 const Color greyColorXd = Color(0xff808284);
 const Color geyHintText = Color(0xffc9c9c9);

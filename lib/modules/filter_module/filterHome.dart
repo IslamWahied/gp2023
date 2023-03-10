@@ -27,7 +27,7 @@ class FilterHome extends StatelessWidget {
 
 
     final List<DropdownMenuItem<String>> jopTitleDropDownMenuItems =
-        jopTitles.map((String value) => DropdownMenuItem<String>(
+    jopTitlesList.map((String value) => DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
               ),
@@ -35,7 +35,7 @@ class FilterHome extends StatelessWidget {
 
 
     final List<DropdownMenuItem<String>> locationDropDownMenuItems =
-    cities.map((String value) => DropdownMenuItem<String>(
+    citiesList.map((String value) => DropdownMenuItem<String>(
       value: value,
       child: Text(value),
     ),
@@ -43,7 +43,7 @@ class FilterHome extends StatelessWidget {
 
 
     final List<DropdownMenuItem<String>> countryDropDownMenuItems =
-    countries.map((String value) => DropdownMenuItem<String>(
+    countriesList.map((String value) => DropdownMenuItem<String>(
       value: value,
       child: Text(value),
     ),
