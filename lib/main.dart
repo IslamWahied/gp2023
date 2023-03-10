@@ -145,8 +145,8 @@ class MyApp extends StatelessWidget {
             darkTheme: darkTheme,
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
-          //  home: startWidget,
-                home:ApplicantCreateSkillsHome(),
+           home: startWidget,
+            //    home:ApplicantCreateSkillsHome(),
           );
         },
       ),
