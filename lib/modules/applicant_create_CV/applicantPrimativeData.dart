@@ -200,7 +200,7 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
                       height: 10,
                     ),
                     defaultDropDownList(
-                        cubit.jopTitleValue,
+                        cubit.jopTitleValue2,
                         (value) => cubit.changeJopTitleState(value),
                         jopTitleDropDownMenuItems2),
                     const SizedBox(
@@ -286,7 +286,7 @@ class ApplicantPrimativeDataHome extends StatelessWidget {
                         function: () {
                           if (cubit.formKey.currentState.validate()) {
                             cubit.cvCreate(
-                                jobTitle: cubit.jopTitleValue,
+                                jobTitle: cubit.jopTitleValue2,
                                 degree: cubit.gradeValue,
                                 city: cubit.cityValue,
                                 nationality: cubit.nationalitiesValue,

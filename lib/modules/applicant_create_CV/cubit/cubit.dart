@@ -28,6 +28,7 @@ class ApplicantPrimativeDataCubit extends Cubit<ApplicantPrimativeDataStates> {
   var countriesValue = defaultDropDownListValue;
   var nationalitiesValue = defaultDropDownListValue;
   var jopTitleValue = defaultDropDownListValue;
+  var jopTitleValue2 = defaultDropDownListValue;
   var genderValue = defaultDropDownListValue;
   var gradeValue = defaultDropDownListValue;
 
@@ -79,7 +80,7 @@ class ApplicantPrimativeDataCubit extends Cubit<ApplicantPrimativeDataStates> {
           cvDataList.add(model);
         }
       }
-      jopTitleValue = cvDataList[0].jobTitle.toString() ?? '';
+      jopTitleValue2 = cvDataList[0].jobTitle.toString() ?? '';
       cityValue = cvDataList[0].city.toString() ?? '';
       nationalitiesValue = cvDataList[0].nationality.toString() ?? '';
       dateTimeController.text = cvDataList[0].dateOfBirth.toString() ?? '';
@@ -112,7 +113,7 @@ class ApplicantPrimativeDataCubit extends Cubit<ApplicantPrimativeDataStates> {
   }
 
   void changeJopTitleState(String JopTitleValue) {
-    jopTitleValue = JopTitleValue;
+    jopTitleValue2 = JopTitleValue;
     emit(ApplicantPrimativeDataChangeJopTitleState());
   }
 
